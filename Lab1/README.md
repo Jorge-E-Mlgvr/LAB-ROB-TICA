@@ -343,6 +343,10 @@ def __init__(self):
 
 En la cual se declara el nombre del nodo como `turtle_controller`, se declara un publicador para enviar comandos de velocidad (`/turtle/cmd/vel`) y un suscriptor que recibirá la pose de la tortuga (`/turtle/pose`) y actualiza `self.theta` (que corresponde a la variable de orientación). Finalmente se indica que se inicie un hilo en segundo plano que constantemente detecte el teclado para leer las entradas del usuario, llamando a dicho hilo `escuchar_teclas`.
 
+### Funciones de la clase `TurtleCOntroller`
+
+#### Función: `actualizar_pose`
+
 Ya habiendo definido las características de la clase, ahora se declaran las funciones asociadas a la clase del nodo de controlador de la tortuga. La primera de ellas se llama `actualizar_pose`:
 
 ```Python
@@ -352,7 +356,11 @@ def actualizar_pose(self, msg):
         self.theta = msg.theta
 ```
 
-Bloque de código el cual simplemente actualiza `self.theta`, que es el valor actual del ángulo de la tortuga. Nótese que se utiliza un `lock` para evitar condiciones de carrera (es decir, para evitar que se acceda al control de ángulo mientras ya está siendo controlado por un proceso). Se declara otra función llamada `escuchar_teclas`:
+Bloque de código el cual simplemente actualiza `self.theta`, que es el valor actual del ángulo de la tortuga. Nótese que se utiliza un `lock` para evitar condiciones de carrera (es decir, para evitar que se acceda al control de ángulo mientras ya está siendo controlado por un proceso). 
+
+#### Función: `escuchar_teclas'
+
+Se declara otra función llamada `escuchar_teclas` que va a ser la cabeza de la operación funcional de todo el código, pues este va a llamar a las demás funciones de la clase. Se evidencia en este el diagrama de flujo general del script:
 
 ```Python
     def escuchar_teclas(self):
@@ -395,4 +403,46 @@ Bloque de código el cual simplemente actualiza `self.theta`, que es el valor ac
                 self.running = False
                 rclpy.shutdown()
 ```
-Las líneas de printeo ayudarán a indicar en la terminal que se está ejecutando el proceso e indica las teclas con función. Como se ve, comienza un proceso permanente de escucha en la cual `get_key()` de la librería heredada detecta las pulsaciones de todas las teclas del teclado. Si `get_key()` detecta algo comenzará a verificar a cuál de los casos corresponde. Solo se incluyen los casos de interés (es decir, los de los objetivos: las teclas correspondientes a las letras iniciales de nuestros nombres y las de moiviento lineal y angular, que son las flechas). Obsérvese que si se recibe una tecla que no se contempla dentro de los condicionales no ocurrirá nada, y si recibe la letra "q" entonces va a terminar el proceso del nodo (es decir, se cerrará el programa). Las demás 
+Las líneas de printeo ayudarán a indicar en la terminal que se está ejecutando el proceso e indica las teclas con función. Como se ve, comienza un proceso permanente de escucha por medio de la función `get_key()`, definida más adelante. Si `get_key()` detecta algo comenzará a verificar a cuál de los casos corresponde. Solo se incluyen los casos de interés (es decir, los de los objetivos: las teclas correspondientes a las letras iniciales de nuestros nombres y las de moiviento lineal y angular, que son las flechas). Obsérvese que si se recibe una tecla que no se contempla dentro de los condicionales no ocurrirá nada, y si recibe la letra "q" entonces va a terminar el proceso del nodo (es decir, se cerrará el programa). Los demás condicionales se encargan de lo siguiente dependiendo de si es una tecla para dibujar una letra o para ejecutar un movimiento simple:
+  
+  -Las teclas que ejecutan movimientos sencillos corresponden a las felchas, que en codificación se nombran `\x1b[A`, `\x1b[B`, `\x1b[C` y `\x1b[D`, van a llamar a la función `mover_tortuga` definida más adelante con parámetros de entrada iguales.
+  
+  -Las teclas de dibujo de letra primero prntean en la terminal que una letra en particular se está escribiendo. Luego preparan a la tortuga, posicionándola en un sentido recto hacia arriba, puesto que los parámetros de movimiento de la tortuga son relativos a su orientación actual. Y finalmente, llama a la función respectiva de la letra para dibujarla.
+
+Se ve este proceso de forma resumida en el siguiente diagrama de flujo realizado en `mermaid`:
+
+```mermaid
+flowchart TD
+    A[Inicio del nodo TurtleController] --> B[Inicializar publicador y suscriptor]
+    B --> C[Arrancar hilo de escucha de teclas]
+    C --> D[Loop: esperar tecla]
+
+    D --> E{¿Cual tecla?}
+    E --> |↑ Flecha Arriba| F[Mover tortuga hacia adelante]
+    E --> |↓ Flecha Abajo| G[Mover tortuga hacia atrás]
+    E --> |→ Flecha Derecha| H[Rotar tortuga horario]
+    E --> |← Flecha Izquierda| I[Rotar tortuga antihorario]
+    E --> |J / E / M / G / A| J[Printeo en consola del dibujo de letra en particular]
+
+    subgraph Figura especial
+       J --> E.0[Alineación de la tortuga] 
+       E.0 --> E.1[Dibujar letra correspondiente]
+    end
+    
+    E --> |Q| K[Salir y shutdown ROS]
+
+    subgraph Movimiento simple
+        F --> L[Publicar vel.linear.x = +1.5]
+        G --> M[Publicar vel.linear.x = -1.5]
+        H --> N[Publicar vel.angular.z = -1.5]
+        I --> O[Publicar vel.angular.z = +1.5]
+        L & M & N & O --> P[Sleep 0.2s y detener]
+    end
+```
+
+
+
+
+
+
+
