@@ -150,7 +150,6 @@ class TurtleController(Node):
         time.sleep(0.2)
         self.detener()
 
-
     def dibujar_letra_j(self):
         self.mover(1.5, 0.0, 2)      # Hacia abajo
         self.mover(1.0, -1.5, 1.5)   # Curva derecha
@@ -186,7 +185,6 @@ class TurtleController(Node):
         self.mover_tortuga(5.0, 0.0)
         self.detener()
 
-
     def dibujar_letra_m(self):
         # Línea izquierda
         self.mover_tortuga(10.0, 0.0)
@@ -211,7 +209,6 @@ class TurtleController(Node):
         self.mover_tortuga(10.0, 0.0)
         self.detener()
 
-
     def dibujar_letra_g(self):
         # C semi-abierto
         self.mover(1.2, -1.0, 2.0)
@@ -222,7 +219,6 @@ class TurtleController(Node):
         self.mover(0.0, -1.0, 1.0)  # Gira a la derecha
         self.mover(0.8, 0.0, 1.0)   # Línea horizontal interna
         self.detener()
-
 
     def dibujar_letra_a(self):
         # Gira y dibuja pierna izquierda
@@ -242,8 +238,6 @@ class TurtleController(Node):
         self.alinear_tortuga(0)
         self.mover_tortuga(8.0,0.0)
         self.detener()
-
-
 
     def mover(self, lin_x, ang_z, duracion):
         msg = Twist()
@@ -286,8 +280,6 @@ class TurtleController(Node):
             time.sleep(0.05)
 
         self.detener()
-
-
 
     def _normalizar_angulo(self, angulo):
         return math.atan2(math.sin(angulo), math.cos(angulo))
