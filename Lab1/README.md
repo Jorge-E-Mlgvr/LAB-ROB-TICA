@@ -56,6 +56,8 @@ Obsérvese que se prepara el entorno para ROS 2 de la misma forma que en el otro
 
 ## Estructura del script `move_turtle.py`
 
+El siguiente es el script completo para el nodo:
+
 ```Python
 import rclpy
 from rclpy.node import Node
@@ -303,3 +305,94 @@ def main(args=None):
             node.destroy_node()
             rclpy.shutdown()
 ```
+A continuación se explica en detalle y parte por parte la función de este código.
+
+### Código `mover_turtle.py`: Importaciones
+```Python
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from turtlesim.msg import Pose
+import threading
+import time
+import math
+import sys
+import tty
+import termios
+```
+En primer lugar se importan los módulos de ROS 2 a utilizar con el fin de poder programar el nodo, y estos módulos corresponden a `rclpy` para Python y `Node` para la configuración de nodos. Se importan también los módulos respectivos de ROS 2 para movimiento (`Twist`) y posición (`Pose`).
+
+Luego se importa `threading` que permite programar de forma que las entradas del teclado puedan pulsarse en paralelo (no solo una a la vez). Las demás librerías son `time` que es para control de retardos, `math` para todo tipo de cálclulos y los últimos tres (`sys`, `tty` y `termios`) son para comunicación del teclado con la terminal activa desde la cual se va a ejecutar el nodo de movimiento.
+
+### Código `mover_turtle.py`: Clase `TurtleController`
+
+Se hace una herencia de la librería `Node` con el fin de usarla para crear el nodo para controlar la tortuga. De dicha clase primero se da el bloque `__init__`
+
+```Python
+def __init__(self):
+    super().__init__('turtle_controller')
+    self.publisher_ = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
+    self.theta = 0.0
+    self.lock = threading.Lock()
+    self.pose_subscriber = self.create_subscription(Pose, '/turtle1/pose', self.actualizar_pose, 10)
+    self.running = True
+    self.input_thread = threading.Thread(target=self.escuchar_teclas)
+    self.input_thread.daemon = True
+    self.input_thread.start()
+```
+
+En la cual se declara el nombre del nodo como `turtle_controller`, se declara un publicador para enviar comandos de velocidad (`/turtle/cmd/vel`) y un suscriptor que recibirá la pose de la tortuga (`/turtle/pose`) y actualiza `self.theta` (que corresponde a la variable de orientación). Finalmente se indica que se inicie un hilo en segundo plano que constantemente detecte el teclado para leer las entradas del usuario, llamando a dicho hilo `escuchar_teclas`.
+
+Ya habiendo definido las características de la clase, ahora se declaran las funciones asociadas a la clase del nodo de controlador de la tortuga. La primera de ellas se llama `actualizar_pose`:
+
+```Python
+def actualizar_pose(self, msg):
+    self.theta = msg.theta
+    with self.lock:
+        self.theta = msg.theta
+```
+
+Bloque de código el cual simplemente actualiza `self.theta`, que es el valor actual del ángulo de la tortuga. Nótese que se utiliza un `lock` para evitar condiciones de carrera (es decir, para evitar que se acceda al control de ángulo mientras ya está siendo controlado por un proceso). Se declara otra función llamada `escuchar_teclas`:
+
+```Python
+    def escuchar_teclas(self):
+        print("Controles:")
+        print("  j - Dibujar letra J (alineada automáticamente)")
+        print("  Flechas - Mover la tortuga (↑ ↓ ← →)")
+        print("  q - Salir")
+        while self.running:
+            tecla = self.get_key()
+            if tecla == 'j':
+                self.get_logger().info("Dibujando la letra J...")
+                self.alinear_tortuga(-math.pi / 2)  # Apuntar hacia abajo
+                self.dibujar_letra_j()
+            elif tecla == 'e':
+                self.get_logger().info("Dibujando la letra E...")
+                self.alinear_tortuga(-math.pi / 2)
+                self.dibujar_letra_e()
+            elif tecla == 'm':
+                self.get_logger().info("Dibujando la letra M...")
+                self.alinear_tortuga(-math.pi / 2)
+                self.dibujar_letra_m()
+            elif tecla == 'g':
+                self.get_logger().info("Dibujando la letra G...")
+                self.alinear_tortuga(-math.pi / 2)
+                self.dibujar_letra_g()
+            elif tecla == 'a':
+                self.get_logger().info("Dibujando la letra A...")
+                self.alinear_tortuga(-math.pi / 2)
+                self.dibujar_letra_a()        
+            elif tecla == '\x1b[A':  # Flecha arriba
+                self.mover_tortuga(1.5, 0.0)
+            elif tecla == '\x1b[B':  # Flecha abajo
+                self.mover_tortuga(-1.5, 0.0)
+            elif tecla == '\x1b[C':  # Flecha derecha
+                self.mover_tortuga(0.0, -1.5)
+            elif tecla == '\x1b[D':  # Flecha izquierda
+                self.mover_tortuga(0.0, 1.5)
+            elif tecla == 'q':
+                print("Saliendo...")
+                self.running = False
+                rclpy.shutdown()
+```
+Las líneas de printeo ayudarán a indicar en la terminal que se está ejecutando el proceso e indica las teclas con función. Como se ve, comienza un proceso permanente de escucha en la cual `get_key()` de la librería heredada detecta las pulsaciones de todas las teclas del teclado. Si `get_key()` detecta algo comenzará a verificar a cuál de los casos corresponde. Solo se incluyen los casos de interés (es decir, los de los objetivos: las teclas correspondientes a las letras iniciales de nuestros nombres y las de moiviento lineal y angular, que son las flechas). Obsérvese que si se recibe una tecla que no se contempla dentro de los condicionales no ocurrirá nada, y si recibe la letra "q" entonces va a terminar el proceso del nodo (es decir, se cerrará el programa). Las demás 
