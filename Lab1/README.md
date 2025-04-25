@@ -37,6 +37,8 @@ Ya finalmente se puede ejecutar el siguiente comando, el cual crea el nodo de la
 ```bash
 $ ros2 run turtlesim turtlesim_node
 ```
-En esta línea, `ros2 run` se utiliza para correr un ejecutable (nodo) del workspace, y `turtlesim` es el nomnbre del paquete de ROS 2 que contiene dicho nodo a ejecutar, en particular el nodo `turtlesim_node`. Al ejecutar este último nodo, se inicia la simulación de la tortuga, apareciendo una ventana gráfica con una tortuga
+En esta línea, `ros2 run` se utiliza para correr un ejecutable (nodo) del workspace, y `turtlesim` es el nomnbre del paquete de ROS 2 que contiene dicho nodo a ejecutar, en particular el nodo `turtlesim_node`. Al ejecutar este último nodo, se inicia la simulación de la tortuga, apareciendo una ventana gráfica con una tortuga:
+
+![image alt](https://github.com/Jorge-E-Mlgvr/LAB-ROB-TICA/blob/main/Lab1/pictures/turtle1.png?raw=true)
 
 
