@@ -1,6 +1,7 @@
 # Laboratorio Turtlesim
 
 ## Introducción del laboratorio
+---
 
 El objetivo del presente laboratorio es controlar el movimiento de la tortuga generada por `turtlesim` mediante teclado de dos formas distintas:
   1. Con flechas predefinidas de teclado moverla de forma lineal y angular.
@@ -10,6 +11,7 @@ Las flechas predefinidas a los movimientos lineales y angulares son "flecha arri
 Dado que nuestras iniciales son "J", "E", "M", "G" y "A", las teclas letradas respectivas se usaran para cada una de las figuras personalizadas.
 
 ## Procedimiento en términal (Ejecución)
+---
 
 En primer lugar se ubica uno en la carpeta respectiva de ROS 2:
 
@@ -55,6 +57,7 @@ $ ros2 run my_turtle_controller move_turtle
 Obsérvese que se prepara el entorno para ROS 2 de la misma forma que en el otro terminal, y además se ejecuta la herramienta `colcon` con el subcomando `build`, lo cual compila los paquetes de ROS 2 que se encuentran en el espacio de trabajo actual. El paquete `my_turtle_controller` se edita por medio de vsc, y ya habiendo ejecutado esta serie de comandos se puede controlar la tortuga por medio de las teclas indicadas y con el desempeño deseado.
 
 ## Estructura del script `move_turtle.py`
+---
 
 No se muestra todo el código aquí como uno solo dado que se puede ver de la misma forma en los archivos adjuntos en el repositorio. Sin embargo, se describirá parte por parte lo que hace cada bloque de código en seguida, con una explicación detallada.
 
@@ -76,6 +79,7 @@ En primer lugar se importan los módulos de ROS 2 a utilizar con el fin de poder
 Luego se importa `threading` que permite programar de forma que las entradas del teclado puedan pulsarse en paralelo (no solo una a la vez). Las demás librerías son `time` que es para control de retardos, `math` para todo tipo de cálclulos y los últimos tres (`sys`, `tty` y `termios`) son para comunicación del teclado con la terminal activa desde la cual se va a ejecutar el nodo de movimiento.
 
 ### Código `mover_turtle.py`: Clase `TurtleController`
+---
 
 Se hace una herencia de la librería `Node` con el fin de usarla para crear el nodo para controlar la tortuga. De dicha clase primero se da el bloque `__init__`
 
@@ -95,6 +99,7 @@ def __init__(self):
 En la cual se declara el nombre del nodo como `turtle_controller`, se declara un publicador para enviar comandos de velocidad (`/turtle/cmd/vel`) y un suscriptor que recibirá la pose de la tortuga (`/turtle/pose`) y actualiza `self.theta` (que corresponde a la variable de orientación). Finalmente se indica que se inicie un hilo en segundo plano que constantemente detecte el teclado para leer las entradas del usuario, llamando a dicho hilo `escuchar_teclas`.
 
 ### Funciones de la clase `TurtleCOntroller`
+---
 
 #### Función: `actualizar_pose`
 
@@ -408,12 +413,16 @@ def dibujar_letra_j(self):
         self.mover_tortuga(8.0,0.0)
         self.detener()
 ```
----
+
 
 ## Resultados
+---
 
+<p align="center">
+  <img src="pictures/letra_a.png" alt="Letra A">
+</p>
 
-
+![]()
 
 
 
