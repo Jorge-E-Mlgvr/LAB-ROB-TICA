@@ -42,7 +42,9 @@ $ ros2 run turtlesim turtlesim_node
 
 En esta línea, `ros2 run` se utiliza para correr un ejecutable (nodo) del workspace, y `turtlesim` es el nombre del paquete de ROS 2 que contiene dicho nodo a ejecutar, en particular el nodo `turtlesim_node`. Al ejecutar este último nodo, se inicia la simulación de la tortuga, apareciendo una ventana gráfica con una tortuga:
 
-![image alt](https://github.com/Jorge-E-Mlgvr/LAB-ROB-TICA/blob/main/Lab1/pictures/turtle1.png?raw=true)
+<p align="center">
+  <img src="pictures/turtle1.png" alt="Letra A">
+</p>
 
 Es necesario ahora tener la capacidad de controlar el movimiento de la tortuga por medio de la ejecución de otro nodo, como por ejemplo `turtle_teleop_key` el cual permite controlar la tortuga con teclas predefinidas. Sin embargo, dado que queremos realizar formas y control particular desde script, se ejecutará un código de Python llamado `move_turtle.py`.
 
@@ -418,11 +420,35 @@ def dibujar_letra_j(self):
 ## Resultados
 ---
 
+Para la letra "A" se obtiene el siguiente resultado:
+
 <p align="center">
   <img src="pictures/letra_a.png" alt="Letra A">
 </p>
 
-![]()
+Para la letra "E":
+
+<p align="center">
+  <img src="pictures/letra_e.png" alt="Letra E">
+</p>
+
+Para la letra "G":
+
+<p align="center">
+  <img src="pictures/letra_g.png" alt="Letra G">
+</p>
+
+Para la letra "J":
+
+<p align="center">
+  <img src="pictures/letra_j.png" alt="Letra J">
+</p>
+
+Para la letra "M":
+
+<p align="center">
+  <img src="pictures/letra_m.png" alt="Letra M">
+</p>
 
 
 
