@@ -456,4 +456,4 @@ Para la letra "M":
 
 Dado que es complicado visualizar si los movimientos simples se realizan o no por medio de una imagen, se graba un video:
 
-[](pictures/movimiento.webm)
+[alt video](pictures/movimiento.mp4)
