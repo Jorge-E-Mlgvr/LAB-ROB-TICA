@@ -450,5 +450,4 @@ Para la letra "M":
   <img src="pictures/letra_m.png" alt="Letra M">
 </p>
 
-
-
+Se excluye la muestra de los movimientos lineales y los de giro, ya que se consideran triviales y se pueden mostrar de mejor forma en el video.
