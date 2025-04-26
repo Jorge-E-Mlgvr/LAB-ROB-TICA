@@ -153,15 +153,38 @@ class TurtleController(Node):
         self.detener()
 
 
-    def dibujar_letra_g(self):
-        # C semi-abierto
-        self.mover(1.2, -1.0, 2.0)
+def dibujar_letra_g(self):
+
+        self.alinear_tortuga(math.pi)
+        time.sleep(0.2)
+
+        #Dibujar media circunferencia ("C" curva)
+        for _ in range(17):  # Hacemos varios pequeños movimientos para formar la curva
+            self.mover_tortuga(2.0, 1.0)
+            time.sleep(0.1)
+
         self.detener()
         time.sleep(0.2)
 
-        # Hacer gancho de G
-        self.mover(0.0, -1.0, 1.0)  # Gira a la derecha
-        self.mover(0.8, 0.0, 1.0)   # Línea horizontal interna
+        #Orientar
+        self.alinear_tortuga(-(math.pi/2))
+        time.sleep(0.2)
+
+        #Pequeño avance hacia arriba
+        self.mover_tortuga(-8.0, 0.0)
+        time.sleep(0.1)
+
+        self.detener()
+        time.sleep(0.2)
+
+        #Orientar
+        self.alinear_tortuga(0)
+        time.sleep(0.2)
+
+        #Avance a la izquireda
+        self.mover_tortuga(-5.0, 0.0)
+        time.sleep(0.1)
+            
         self.detener()
 
 
