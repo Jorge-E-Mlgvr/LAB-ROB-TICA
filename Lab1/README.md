@@ -440,6 +440,207 @@ flowchart TD
     end
 ```
 
+#### Función: `get_key`
+
+```Python
+def get_key(self):
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            ch1 = sys.stdin.read(1)
+            if ch1 == '\x1b':
+                ch2 = sys.stdin.read(1)
+                ch3 = sys.stdin.read(1)
+                return ch1 + ch2 + ch3
+            else:
+                return ch1
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+```
+Esta función utiliza las librerías de `termios` y `tty` para leer las teclas en tiempo real. La estructura de este código es consecuencia del uso de la librería.
+
+#### Función: `mover_tortuga` y `detener`
+
+```Python
+def mover_tortuga(self, lin_x, ang_z):
+        msg = Twist()
+        msg.linear.x = lin_x
+        msg.angular.z = ang_z
+        self.publisher_.publish(msg)
+        time.sleep(0.2)
+        self.detener()
+#...
+#Más adelante en el código
+def detener(self):
+        msg = Twist()
+        msg.linear.x = 0.0
+        msg.angular.z = 0.0
+        self.publisher_.publish(msg)
+
+```
+Obsérvese que para el movimiento se utiliza la importación de `twist` y mediante el conocimiento de la librería se varían los parámetros de objeto según sean las entrada, ya predefinidas de giro y desplazamiento, en el bloque de código cabeza. En general, estos dos bloques de código publican comandos de movimiento y luego detienen la tortuga para movimientos discretos.
+
+#### Función: `alinear_tortuga`
+
+```Python
+    def alinear_tortuga(self, angulo_objetivo):
+        tolerancia = 0.001
+        max_duracion = 15
+        velocidad = 0.2
+
+        start_time = time.time()
+        while rclpy.ok() and (time.time() - start_time) < max_duracion:
+            with self.lock:
+                error = self._normalizar_angulo(angulo_objetivo - self.theta)
+
+            if abs(error) < tolerancia:
+                break
+
+            msg = Twist()
+            msg.angular.z = velocidad if error > 0 else -velocidad
+            self.publisher_.publish(msg)
+            time.sleep(0.05)
+
+        self.detener()
+```
+Este bloque de código modifica juega con los comandos de movimiento importados para girar la tortuga un ángulo específico, que se mantiene constante en el código de cabecera. Depende de otra función de normalizaación matemática:
+
+```Python
+    def _normalizar_angulo(self, angulo):
+        return math.atan2(math.sin(angulo), math.cos(angulo))
+```
+
+#### Función: `mover` y `girar`
+
+Estas funciones se distinguen de las anteriores y son especiales para el dibujo de las letras dado que permiten llamar y ejecutar movimientos de forma continua en la tortuga, sin los cuales sería muy largo con las demás funciones:
+
+```Python
+    def mover(self, lin_x, ang_z, duracion):
+        msg = Twist()
+        msg.linear.x = lin_x
+        msg.angular.z = ang_z
+        tiempo_inicial = self.get_clock().now().seconds_nanoseconds()[0]
+        while self.get_clock().now().seconds_nanoseconds()[0] - tiempo_inicial < duracion:
+            self.publisher_.publish(msg)
+            time.sleep(0.1)
+```
+Observe que el bloque 'while' es el que, por medio de un reloj de ROS 2, contabiliza para ejecutar el movimiento. Publica un mensaje `Twist`repetidamente y no detiene la tortuga automaticamente como en la otra función de `mover_tortuga`. El caso de la función `girar` no es tan distinto:
+
+```Python
+def girar(self, angulo):
+        msg = Twist()
+        if angulo > 0:
+            msg.angular.z = 1.5
+        else:
+            msg.angular.z = -1.5
+        tiempo = abs(angulo) / 1.5
+        t0 = time.time()
+        while time.time() - t0 < tiempo:
+            self.publisher_.publish(msg)
+            time.sleep(0.1)
+        self.detener()
+```
+### Funciones de dibujo de letras
+
+En seguida se muestran las funciones respectivas para cada una de las letras. No se dará mayor explicación sobre el motivo de cada línea, pues fueron ajustándose según era la intención que el dibujo cumpliese con la forma. Usan todas las funciones anteriormente descritas y busca, cada una, con su estructura, darle una apariencia satisfactoria a las letras.
+
+```Python
+def dibujar_letra_j(self):
+        self.mover(1.5, 0.0, 2)      # Hacia abajo
+        self.mover(1.0, -1.5, 1.5)   # Curva derecha
+        self.mover(0.5, 2.0, 1)      # Gancho
+        self.detener()
+    
+    def dibujar_letra_e(self):
+        # Línea vertical
+        self.mover_tortuga(10.0,0.0)
+        self.detener()
+        time.sleep(0.2)
+
+        # Infeior horizontal
+        self.alinear_tortuga(0.0)
+        self.mover_tortuga(5.0,0.0)
+        self.detener()
+        time.sleep(0.2)
+
+        # Regresar al medio
+        self.mover_tortuga(-4.5, 0.0)
+        self.alinear_tortuga(-math.pi / 2)
+        self.mover_tortuga(-5.0, 0.0)
+        self.alinear_tortuga(0)
+        self.mover_tortuga(4.0, 0.0)
+        self.detener()
+        time.sleep(0.2)
+
+        # Regresar al centro base y trazar línea superior
+        self.mover_tortuga(-3.8, 0.0)
+        self.alinear_tortuga(-math.pi / 2)
+        self.mover_tortuga(-5.0, 0.0)
+        self.alinear_tortuga(0)
+        self.mover_tortuga(5.0, 0.0)
+        self.detener()
+
+
+    def dibujar_letra_m(self):
+        # Línea izquierda
+        self.mover_tortuga(10.0, 0.0)
+        self.detener()
+        time.sleep(0.2)
+
+        # Regresar y dibujar la primera diagonal
+        self.mover_tortuga(-10.0, 0.0)
+        self.alinear_tortuga(-(math.pi/4))
+        self.mover_tortuga(7.0, 0.0)
+        self.detener()
+        time.sleep(0.2)
+
+        # Segunda diagonal
+        self.alinear_tortuga((math.pi/4))
+        self.mover_tortuga(7.0, 0.0)
+        self.detener()
+        time.sleep(0.2)
+
+        # Línea derecha
+        self.alinear_tortuga(-(math.pi/2))
+        self.mover_tortuga(10.0, 0.0)
+        self.detener()
+
+
+    def dibujar_letra_g(self):
+        # C semi-abierto
+        self.mover(1.2, -1.0, 2.0)
+        self.detener()
+        time.sleep(0.2)
+
+        # Hacer gancho de G
+        self.mover(0.0, -1.0, 1.0)  # Gira a la derecha
+        self.mover(0.8, 0.0, 1.0)   # Línea horizontal interna
+        self.detener()
+
+
+    def dibujar_letra_a(self):
+        # Gira y dibuja pierna izquierda
+        self.alinear_tortuga(-(math.pi /3))
+        self.mover_tortuga(-10.0, 0.0)
+        self.detener()
+        time.sleep(0.2)
+
+        # Gira y dibuja pierna derecha
+        self.alinear_tortuga((math.pi/3))
+        self.mover_tortuga(-10.0, 0.0)
+        self.detener()
+        time.sleep(0.2)
+
+        # Línea horizontal al medio
+        self.mover_tortuga(5.0, 0.0)
+        self.alinear_tortuga(0)
+        self.mover_tortuga(8.0,0.0)
+        self.detener()
+```
+---
+
+## Resultados
 
 
 
