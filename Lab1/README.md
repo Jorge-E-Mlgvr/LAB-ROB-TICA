@@ -421,9 +421,6 @@ Para la letra "M":
 </p>
 
 
-### Resultados: Movimiento
----
+### Presentación
 
-Dado que es complicado visualizar si los movimientos simples se realizan o no por medio de una imagen, se graba un video:
-
-[Link al video de movimiento.](pictures/movimiento.mp4)
+[Link al video de la presentación en youtube.](https://youtu.be/41Mnf04L6z8)
