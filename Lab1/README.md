@@ -269,36 +269,6 @@ Este bloque de código modifica juega con los comandos de movimiento importados 
         return math.atan2(math.sin(angulo), math.cos(angulo))
 ```
 
-#### Función: `mover` y `girar`
-
-Estas funciones se distinguen de las anteriores y son especiales para el dibujo de las letras dado que permiten llamar y ejecutar movimientos de forma continua en la tortuga, sin los cuales sería muy largo con las demás funciones:
-
-```Python
-    def mover(self, lin_x, ang_z, duracion):
-        msg = Twist()
-        msg.linear.x = lin_x
-        msg.angular.z = ang_z
-        tiempo_inicial = self.get_clock().now().seconds_nanoseconds()[0]
-        while self.get_clock().now().seconds_nanoseconds()[0] - tiempo_inicial < duracion:
-            self.publisher_.publish(msg)
-            time.sleep(0.1)
-```
-Observe que el bloque 'while' es el que, por medio de un reloj de ROS 2, contabiliza para ejecutar el movimiento. Publica un mensaje `Twist`repetidamente y no detiene la tortuga automaticamente como en la otra función de `mover_tortuga`. El caso de la función `girar` no es tan distinto:
-
-```Python
-def girar(self, angulo):
-        msg = Twist()
-        if angulo > 0:
-            msg.angular.z = 1.5
-        else:
-            msg.angular.z = -1.5
-        tiempo = abs(angulo) / 1.5
-        t0 = time.time()
-        while time.time() - t0 < tiempo:
-            self.publisher_.publish(msg)
-            time.sleep(0.1)
-        self.detener()
-```
 ### Funciones de dibujo de letras
 
 En seguida se muestran las funciones respectivas para cada una de las letras. No se dará mayor explicación sobre el motivo de cada línea, pues fueron ajustándose según era la intención que el dibujo cumpliese con la forma. Usan todas las funciones anteriormente descritas y busca, cada una, con su estructura, darle una apariencia satisfactoria a las letras.
