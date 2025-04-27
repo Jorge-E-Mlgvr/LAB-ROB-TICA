@@ -207,17 +207,6 @@ def dibujar_letra_g(self):
         self.mover_tortuga(8.0,0.0)
         self.detener()
 
-
-
-    def mover(self, lin_x, ang_z, duracion):
-        msg = Twist()
-        msg.linear.x = lin_x
-        msg.angular.z = ang_z
-        tiempo_inicial = self.get_clock().now().seconds_nanoseconds()[0]
-        while self.get_clock().now().seconds_nanoseconds()[0] - tiempo_inicial < duracion:
-            self.publisher_.publish(msg)
-            time.sleep(0.1)
-
     def girar(self, angulo):
         msg = Twist()
         if angulo > 0:
