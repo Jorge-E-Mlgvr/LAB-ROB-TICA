@@ -49,7 +49,7 @@ Donde la medida coloreada en azul es de interés. Lo anterior se debe a que se b
 El siguiente es un dibujo CAD, solo ilustriativo, del portaherramienta:
 
 <p align="center">
-  <img src="picture/portaherramienta_medidas.jpg" alt="Portaherramienta" height="500">
+  <img src="picture/portaherramienta_medidas.jpg" alt="Portaherramienta" height="400">
 </p>
 
 Para la letra "A" se obtiene el siguiente resultado:
