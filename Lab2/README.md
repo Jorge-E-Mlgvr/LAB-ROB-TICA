@@ -1,104 +1,24 @@
-# Laboratorio Turtlesim
+# Laboratorio RobotStudio
 
 ## Introducción del laboratorio
 ---
 
-El objetivo del presente laboratorio es controlar el movimiento de la tortuga generada por `turtlesim` mediante teclado de dos formas distintas:
-  1. Con flechas predefinidas de teclado moverla de forma lineal y angular.
-  2. Con flechas respectivas a las iniciales nuestras, dibujar una letra predefinida.
+El objetivo del presente laboratorio es por medio de simulación y RAPID en un ABB IRB-140:
+  1. Dibujar el primer nombre de cada integrante, de forma separada, sobre una torta con un tamaño correspondiente a 20 personas aproximadamente.
+  2. Hacer el objetivo anterior de forma que primero se lleve la torta sobre una banda transportadora, la desplace hasta el robot, y tan pronto este útlimo termine el dibujo desplace la torta otra vez con la banda transportadora.
 
-Las flechas predefinidas a los movimientos lineales y angulares son "flecha arriba" para avance frontal y "flecha abajo" para retroceso. Por otro lado, "flecha izquierda" será para giro antihorario y "flecha derecha" será para giro horario.
-Dado que nuestras iniciales son "J", "E", "M", "G" y "A", las teclas letradas respectivas se usaran para cada una de las figuras personalizadas.
+En relación a estos objetivos, se hacen unas observaciones adicionales. Primero, debido a limitaciones de tiempo y disponibilidad del laboratorio, se restringe el movimiento de la banda transportadora solo a la simulación de RobotStudio. Por otra parte, este laboratorio inició con tres integrantes, pero poco tiempo después de su inició el tercer compañero abandonó; se realizó parte del código RAPID para dibujar el nombre del compañero pero no se continuó, debido a la innecesidad. Finalmente, se adecuó el espacio de dibujo en la prueba real y por los implementos usados se dio cierta inclinación que influye en el dibujo final, que se explicará su motivo en uno de los apartados siguientes.
 
-## Procedimiento en términal (Ejecución)
+## Procedimiento, Parte #1: Diseño de herramienta
 ---
 
-En primer lugar se ubica uno en la carpeta respectiva de ROS 2:
+Se dispone de las siguientes herramientas en el laboratorio:
+  - Un manipulador industrial IRB-140 de la marca ABB.
+  - Un controlador IRC5 con un módulo de distribución de energía 3HAC025917-001/00 DSQC 652.
+  - Un RobotTeach Pendent de ABB modelo 3HACO28357—001 para el controlador IRC5.
 
-'''base
-$ cd ~/ros2_ws
-'''
 
-Se prepara el entorno de la terminal para abrir la ventana de la tortuga de la siguiente forma:
 
-```bash
-$ source /opt/ros/humble/setup.bash 
-```
-
-Donde `source` es un comando built-in de la shell, que ejecuta los comandos dentro de un archivo especificado cuya dirección se especifica en seguida (es decir, el archivo con ruta `/opt/ros/humble/setup.bash`). El archivo `setup.bash`, entonces, es un script que añade las rutas de los ejecutables de ROS 2 (como `ros2`, `colcon`) al path (al terminal para su uso), las rutas de las bibliotecas de ROS 2, las rutas de los paquete de Python para ROS 2.
-
-Se ejecuta otro comando de la shell:
-
-```bash
-$ source install/setup.bash
-```
-El cual es un comando que el script `setup.bash` del directorio `install` del workspace local, y añade las rutas de los ejecutables, bibliotecas, módulos de python del dicho directorio a las variables de entorno modificadas en el anterior comando.
-
-Ya finalmente se puede ejecutar el siguiente comando, el cual crea el nodo de la tortuguita y al muestra en una ventana:
-
-```bash
-$ ros2 run turtlesim turtlesim_node
-```
-
-En esta línea, `ros2 run` se utiliza para correr un ejecutable (nodo) del workspace, y `turtlesim` es el nombre del paquete de ROS 2 que contiene dicho nodo a ejecutar, en particular el nodo `turtlesim_node`. Al ejecutar este último nodo, se inicia la simulación de la tortuga, apareciendo una ventana gráfica con una tortuga:
-
-<p align="center">
-  <img src="pictures/turtle1.png" alt="Letra A">
-</p>
-
-Es necesario ahora tener la capacidad de controlar el movimiento de la tortuga por medio de la ejecución de otro nodo, como por ejemplo `turtle_teleop_key` el cual permite controlar la tortuga con teclas predefinidas. Sin embargo, dado que queremos realizar formas y control particular desde script, se ejecutará un código de Python llamado `move_turtle.py`.
-
-Se ejecuta este último de la siguiente forma, por necesidad en una nueva terminal:
-
-```bash
-$ source /opt/ros/humble/setup.bash
-$ source install/setup.bash
-$ colcon build
-$ ros2 run my_turtle_controller move_turtle
-```
-Obsérvese que se prepara el entorno para ROS 2 de la misma forma que en el otro terminal, y además se ejecuta la herramienta `colcon` con el subcomando `build`, lo cual compila los paquetes de ROS 2 que se encuentran en el espacio de trabajo actual. El paquete `my_turtle_controller` se edita por medio de vsc, y ya habiendo ejecutado esta serie de comandos se puede controlar la tortuga por medio de las teclas indicadas y con el desempeño deseado.
-
-## Estructura del script `move_turtle.py`
----
-
-No se muestra todo el código aquí como uno solo dado que se puede ver de la misma forma en los archivos adjuntos en el repositorio. Sin embargo, se describirá parte por parte lo que hace cada bloque de código en seguida, con una explicación detallada.
-
-### Código `mover_turtle.py`: Importaciones
-```Python
-import rclpy
-from rclpy.node import Node
-from geometry_msgs.msg import Twist
-from turtlesim.msg import Pose
-import threading
-import time
-import math
-import sys
-import tty
-import termios
-```
-En primer lugar se importan los módulos de ROS 2 a utilizar con el fin de poder programar el nodo, y estos módulos corresponden a `rclpy` para Python y `Node` para la configuración de nodos. Se importan también los módulos respectivos de ROS 2 para movimiento (`Twist`) y posición (`Pose`).
-
-Luego se importa `threading` que permite programar de forma que las entradas del teclado puedan pulsarse en paralelo (no solo una a la vez). Las demás librerías son `time` que es para control de retardos, `math` para todo tipo de cálclulos y los últimos tres (`sys`, `tty` y `termios`) son para comunicación del teclado con la terminal activa desde la cual se va a ejecutar el nodo de movimiento.
-
-### Código `mover_turtle.py`: Clase `TurtleController`
----
-
-Se hace una herencia de la librería `Node` con el fin de usarla para crear el nodo para controlar la tortuga. De dicha clase primero se da el bloque `__init__`
-
-```Python
-def __init__(self):
-    super().__init__('turtle_controller')
-    self.publisher_ = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
-    self.theta = 0.0
-    self.lock = threading.Lock()
-    self.pose_subscriber = self.create_subscription(Pose, '/turtle1/pose', self.actualizar_pose, 10)
-    self.running = True
-    self.input_thread = threading.Thread(target=self.escuchar_teclas)
-    self.input_thread.daemon = True
-    self.input_thread.start()
-```
-
-En la cual se declara el nombre del nodo como `turtle_controller`, se declara un publicador para enviar comandos de velocidad (`/turtle/cmd/vel`) y un suscriptor que recibirá la pose de la tortuga (`/turtle/pose`) y actualiza `self.theta` (que corresponde a la variable de orientación). Finalmente se indica que se inicie un hilo en segundo plano que constantemente detecte el teclado para leer las entradas del usuario, llamando a dicho hilo `escuchar_teclas`.
 
 ### Funciones de la clase `TurtleCOntroller`
 ---
