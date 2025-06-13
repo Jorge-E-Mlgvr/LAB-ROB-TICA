@@ -15,12 +15,12 @@ En relación a estos objetivos, se hacen unas observaciones adicionales. Primero
 Se dispone de las siguientes herramientas en el laboratorio:
   - Un manipulador industrial IRB-140 de la marca ABB.
 <p align="center">
-  <img src="pictures/irb-140.png" alt="Manipulador">
+  <img src="picture/irb-140.png" alt="Manipulador">
 </p>
   - Un controlador IRC5 con un módulo de distribución de energía 3HAC025917-001/00 DSQC 652.
   - Un RobotTeach Pendent de ABB modelo 3HACO28357—001 para el controlador IRC5.
 <p align="center">
-  <img src="pictures/irc5.jpg" alt="Controlador y HMI">
+  <img src="picture/irc5.jpg" alt="Controlador y HMI">
 </p>
 
 
