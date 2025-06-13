@@ -68,12 +68,11 @@ Ya teniendo el modelo del portaherramienta y el modelo de la caja, se exportan d
   1. RobotStudio, al importar estos modelos como cuerpos independientes, asigna sistemas coordenados a cada uno que sirve para referenciarlos (un sistema de coordenadas para que todo lo que se haga con o sobre ese cuerpo sea con respecto a una referencia única que reconoce un sistema de coordenadas universales)
   2. Este sistema de coordendas debe reubicarse para ambos cuerpos en función de su utilidad:
        - Para el caso del portaherramienta, se ubica en su parte inferior, donde se va a ajustar con el flange para herramientas del último eslabón del robot IRB-140. Esto, de forma que despúes de una configuración, se ajuste el sistema de coordenadas del portaherramienta con el sistema de coordenadas TCP que tiene el modelo del IRB-140 por defecto.
+           - Para el caso de la caja, se ubica en el workspace en cualquier lugar que resulte alcanzable y conveniente para el manipulador (se encuentre dentro de su espacio alcanzable, y si acaso luego se ajusta para su espacio diestro). Luego, se ubica el sistema de coordenadas de este objeto en un punto conveniente para definir los puntos para las trayectorias. En este caso, se ubica en la esquina de la cara superior más cercana al manipulador, de forma que todos los puntos tengan coordenadas con componentes positivas relativas al sistema coordenado de la torta.
 
 <p align="center">
   <img src="picture/base_portaherramienta.png" alt="base_portaherramienta" height="300">
 </p>
-
-       - Para el caso de la caja, se ubica en el workspace en cualquier lugar que resulte alcanzable y conveniente para el manipulador (se encuentre dentro de su espacio alcanzable, y si acaso luego se ajusta para su espacio diestro). Luego, se ubica el sistema de coordenadas de este objeto en un punto conveniente para definir los puntos para las trayectorias. En este caso, se ubica en la esquina de la cara superior más cercana al manipulador, de forma que todos los puntos tengan coordenadas con componentes positivas relativas al sistema coordenado de la torta.
 
 <p align="center">
   <img src="picture/torta_uwu.png" alt="torta_uwu" height="300">
