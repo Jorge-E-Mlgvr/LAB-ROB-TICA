@@ -17,8 +17,10 @@ Se dispone de las siguientes herramientas en el laboratorio:
 <p align="center">
   <img src="picture/irb-140.png" alt="Manipulador">
 </p>
+
   - Un controlador IRC5 con un módulo de distribución de energía 3HAC025917-001/00 DSQC 652.
   - Un RobotTeach Pendent de ABB modelo 3HACO28357—001 para el controlador IRC5.
+
 <p align="center">
   <img src="picture/irc5.jpg" alt="Controlador y HMI">
 </p>
