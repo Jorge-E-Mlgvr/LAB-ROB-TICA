@@ -62,7 +62,11 @@ Antes de proceder, se destaca lo siguiente para el procedimiento: es posible den
   <img src="picture/nombres.jpg" alt="Nombres_imprenta" height="300">
 </p>
 
-Ya teniendo la herramienta en Inventor, se exporta el modelo y se importa ahora como .sat a RobotStudio:
+Ya teniendo el modelo del portaherramienta y el modelo de la caja, se exportan de Inventor y se importan (de nuevo, como .sat) a RobotStudio. En este punto es necesario hacer algunos ajustes:
+  1. RobotStudio, al importar estos modelos como cuerpos independientes, asigna sistemas coordenados a cada uno que sirve para referenciarlos (un sistema de coordenadas para que todo lo que se haga con o sobre ese cuerpo sea con respecto a una referencia única que reconoce un sistema de coordenadas universales)
+  2. Este sistema de coordendas debe reubicarse para ambos cuerpos en función de su utilidad:
+       - Para el caso del portaherramienta, se ubica en su parte inferior, donde se va a ajustar con el encaje para herramientas del último eslabón del robot IRB-140. Esto, de forma que despúes de una configuración, se ajuste el sistema de coordenadas del portaherramienta con el sistema de coordenadas TCP que tiene el modelo del IRB-140 por defecto.
+       - 
 
 
 Antes e
