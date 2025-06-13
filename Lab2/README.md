@@ -52,35 +52,7 @@ El siguiente es un dibujo CAD, solo ilustriativo, del portaherramienta:
   <img src="picture/portaherramienta_medidas.jpg" alt="Portaherramienta" height="300">
 </p>
 
-Para la letra "A" se obtiene el siguiente resultado:
-
-<p align="center">
-  <img src="pictures/letra_a.png" alt="Letra A">
-</p>
-
-Para la letra "E":
-
-<p align="center">
-  <img src="pictures/letra_e.png" alt="Letra E">
-</p>
-
-Para la letra "G":
-
-<p align="center">
-  <img src="pictures/letra_g.png" alt="Letra G">
-</p>
-
-Para la letra "J":
-
-<p align="center">
-  <img src="pictures/letra_j.png" alt="Letra J">
-</p>
-
-Para la letra "M":
-
-<p align="center">
-  <img src="pictures/letra_m.png" alt="Letra M">
-</p>
+Ya teniendo la herramienta en Inventor, se exporta el modelo y se importa ahora, como .sat a RobotStudio
 
 
 ### Presentación
