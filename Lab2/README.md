@@ -1,5 +1,9 @@
 # Laboratorio RobotStudio
 
+<p align="center">
+  <img src="picture/pastral.png" alt="Pastel ejemplo">
+</p>
+
 ## Introducción del laboratorio
 ---
 
