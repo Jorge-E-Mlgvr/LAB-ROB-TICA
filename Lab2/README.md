@@ -41,7 +41,7 @@ De los anteriores implementos, solo se deben tener en cuenta dos en particular: 
 Para el diseño de la herramienta, se consiguen marcadores comunes de la marca Pelikan y se extraen sus medidas haciendo uso de un pie de rey:
 
 <p align="center">
-  <img src="picture/medidas_marcador.jpg" alt="Marcador">
+  <img src="picture/medidas_marcador.jpg" alt="Marcador" height="300">
 </p>
 
 
