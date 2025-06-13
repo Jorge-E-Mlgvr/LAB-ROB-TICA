@@ -46,9 +46,11 @@ Para el diseño de la herramienta, se consiguen marcadores comunes de la marca P
 
 Donde la medida coloreada en azul es de interés. Lo anterior se debe a que se busca emplear un resorte en la base del marcador como método de tolerancia para el dibujo con el marcador sobre el tablero, de forma que esa medida de la punta al cuerpo del portaherramienta (que va hasta el cuello del cuerpo del marcador) va a ir variando. Las demás medidas, en rojo, servirán para las dimensiones de encaje del marcador en el portaherramienta y su ajuste seguro.
 
-Después del diseño en inventor:
+El siguiente es un dibujo CAD, solo ilustriativo, del portaherramienta:
 
-
+<p align="center">
+  <img src="picture/portaherramienta_medidas.jpg" alt="Portaherramienta" height="500">
+</p>
 
 Para la letra "A" se obtiene el siguiente resultado:
 
