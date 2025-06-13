@@ -52,11 +52,20 @@ El siguiente es un dibujo CAD, solo ilustriativo, del portaherramienta:
   <img src="picture/portaherramienta_medidas.jpg" alt="Portaherramienta" height="300">
 </p>
 
-Ya teniendo la herramienta en Inventor, se exporta el modelo y se importa ahora, como .sat a RobotStudio
+<p align="center">
+  <img src="picture/portaherramienta_modelo.jpg" alt="Portaherramienta_2" height="300">
+</p>
+
+Antes de proceder, se destaca lo siguiente para el procedimiento: es posible dentro de RobotStudio definir paths a partir de puntos flotantes en el mismo entorno, pero es muy inexacto o bien consumiría , para dibujar los nombres. Existe, sin embargo, una ruta alternativa, más sencilla, rápida y exacta: importar un modelo de caja con los nombres impresos en ellas, y utilizar las herramientas de cursor y snap a esquinas/curvas/aristas para realizar paths exactos o por lo menos aproximados. Se realiza la siguiente imprenta sobre un modelo .sat de caja 20x20x10 (mm):
 
 <p align="center">
   <img src="picture/portaherramienta_modelo.jpg" alt="Portaherramienta_2" height="300">
 </p>
+
+Ya teniendo la herramienta en Inventor, se exporta el modelo y se importa ahora, como .sat a RobotStudio
+
+
+Antes e
 
 ### Presentación
 
