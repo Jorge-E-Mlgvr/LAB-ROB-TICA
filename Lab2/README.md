@@ -141,7 +141,26 @@ flowchart TD
     L --> M["Vuelve al inicio del WHILE"]
     J -- No --> M
 ```
+En caso de dificultad visualizando el texto en el diagrama de flujo, véase el texto:
 
+
+```txt
+flowchart TD
+    A["Encendido de Robot"] --> B["Reset salidas digitales #1 para el led indicador de estado y #2 para el movimiento de la banda"]
+    B --> C{"Se presionó el botón entrada digital de dibujado de la torta #1?"}
+    C -- No --> J{"Botón entrada digital #2 activo, para la posición de mantenimiento?"}
+    C -- Sí --> D["Poner ACTIVO salida digital para movimiento de la torta -> Esperar posicionamiento -> Apagar el movimiento -> Espera"]
+    D --> E["Activar el dibujado"]
+    E --> F["Llevar a Home"]
+    F --> G["Dibujar los nombres"]
+    G --> H["Dibujar la estrella e ir a home"]
+    H --> I["Poner ACTIVO salida digital para movimiento de la torta -> Esperar posicionamiento -> Apagar el movimiento -> Espera"]
+    I --> J
+    J -- Sí --> K["Apagar el indicador de que está en proceso de dibujado el manipulador"]
+    K --> L["Llevar a la posición de mantimiento"]
+    L --> M["Vuelve al inicio del WHILE"]
+    J -- No --> M
+```
 
 ## Presentación
 
