@@ -1,7 +1,7 @@
 # Laboratorio RobotStudio
 
 <p align="center">
-  <img src="picture/pastral.png" alt="Pastel ejemplo" style="transform: scale(0.25); transform-origin: center;">
+  <img src="picture/pastral.png" alt="Pastel ejemplo" height="600">
 </p>
 
 ## Introducción del laboratorio
