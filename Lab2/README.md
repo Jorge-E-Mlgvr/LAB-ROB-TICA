@@ -55,7 +55,7 @@ El siguiente es un dibujo CAD, solo ilustriativo, del portaherramienta:
 Ya teniendo la herramienta en Inventor, se exporta el modelo y se importa ahora, como .sat a RobotStudio
 
 <p align="center">
-  <img src="picture/portaherramienta_modleo.jpg" alt="Portaherramienta_2" height="300">
+  <img src="picture/portaherramienta_modelo.jpg" alt="Portaherramienta_2" height="300">
 </p>
 
 ### Presentación
