@@ -14,7 +14,9 @@ El objetivo del presente laboratorio es por medio de simulación y RAPID en un A
 
 En relación a estos objetivos, se hacen unas observaciones adicionales. Primero, debido a limitaciones de tiempo y disponibilidad del laboratorio, se restringe el movimiento de la banda transportadora solo a la simulación de RobotStudio. Por otra parte, este laboratorio inició con tres integrantes, pero poco tiempo después de su inició el tercer compañero abandonó; se realizó parte del código RAPID para dibujar el nombre del compañero pero no se continuó, debido a la innecesidad. Finalmente, se adecuó el espacio de dibujo en la prueba real y por los implementos usados se dio cierta inclinación que influye en el dibujo final, que se explicará su motivo en uno de los apartados siguientes. Por último, ni se emplea una torta real y tampoco un extrusor de confitura, sino un caja/tablero que hace de torta (con las dimensiones proporcionales) y un marcador que hace de extrusor.
 
-## Procedimiento, Parte #0: Preliminares
+## Procedimiento
+
+### Preliminares
 ---
 
 Se dispone de las siguientes herramientas en el laboratorio:
@@ -33,8 +35,15 @@ Se dispone de las siguientes herramientas en el laboratorio:
 De los anteriores implementos, solo se deben tener en cuenta dos en particular: el controlador y el manipulador. Esto debido a que con sus modelos de computador se podrá trabajar en el módulo de RAPID dentro del workspace de RobotStudio. Dentro de RobotStudio se incluyen estos implementos, pero todavía hace falta el portaherramienta. El portaherramienta se puede obtener en físico dado un costo y su modelo también, aunque puede que encontrarlo tenga su dificultad; sin embargo, dados los requerimientos del laboratorio y facilidad de producción (manufactura aditiva), se diseña uno propio.
 
 
-## Resultados
+### Diseño del portaherramienta
 ---
+
+Para el diseño de la herramienta, se consiguen marcadores comunes de la marca Pelikan y se extraen sus medidas haciendo uso de un pie de rey:
+
+<p align="center">
+  <img src="picture/irb-140.png" alt="Manipulador">
+</p>
+
 
 Para la letra "A" se obtiene el siguiente resultado:
 
