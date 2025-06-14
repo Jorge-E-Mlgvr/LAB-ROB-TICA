@@ -4,6 +4,7 @@
   <img src="picture/pastral.png" alt="Pastel ejemplo" height="400">
 </p>
 
+
 ## Introducción del laboratorio
 ---
 
@@ -14,7 +15,10 @@ El objetivo del presente laboratorio es por medio de simulación y RAPID en un A
 
 En relación a estos objetivos, se hacen unas observaciones adicionales. Primero, debido a limitaciones de tiempo y disponibilidad del laboratorio, se restringe el movimiento de la banda transportadora solo a la simulación de RobotStudio. Por otra parte, este laboratorio inició con tres integrantes, pero poco tiempo después de su inició el tercer compañero abandonó; se realizó parte del código RAPID para dibujar el nombre del compañero pero no se continuó, debido a la innecesidad. Finalmente, se adecuó el espacio de dibujo en la prueba real y por los implementos usados se dio cierta inclinación que influye en el dibujo final, que se explicará su motivo en uno de los apartados siguientes. Por último, ni se emplea una torta real y tampoco un extrusor de confitura, sino un caja/tablero que hace de torta (con las dimensiones proporcionales) y un marcador que hace de extrusor.
 
+
 ## Procedimiento
+---
+
 
 ### Preliminares
 ---
@@ -86,7 +90,9 @@ Antes de proceder, se hace un ajuste adicional: para el caso del portaherramient
 
 Ya con esto, se tiene todo ajustado en RobotStudio y se puede a proceder a preparar el código para el módulo RAPID a usar con el robot en físico.
 
+
 ### Módulo RAPID y configuraciones adicionales de simulación
+---
 
 Por medio de la herramienta de creación de targets, se crean puntos sobre la imprenta que permitan crear trayectorias para dibujar cada una de las letras y la figura. Estos targets se crean en relación al sistema coordenado del WorkObject (el de la torta), de forma que se puede mover este y se muevan, con él, las trayectorias a realizar. Se crean las trayectorias y se modifican en el editor de RAPID de forma que cumplan las siguientes características:
   1. Velocidad de 100 (m/s), a escogencia propia, dado el rango especificado en la guía de laboratorio.
@@ -101,7 +107,9 @@ Se identifican dos procesos: primero, el de dibujado sobre la torta, y segundo e
   - Para esto, se crearon señales digitales nombradas, respectivamente: DI_01, DI_02, DO_01 y DO_02. La anterior nomenclatura con el fin de poder emplear las salidas con el controlador a disposición en el laboratorio.
   - Se emplearon elementos de "SmartComponents" dentro del simulador de RobotStudio para verificar la funcionalidad del código RAPID. Se asociaron, a demás, a las señales digitales del controlador.
 
+
 ### Descripción (resumida) del código:
+---
 
 El siguiente diagrama muestra el funcionamiento del módulo RAPID. Se destaca que únicamente mira la lógica entre las variables:
 
@@ -167,9 +175,15 @@ flowchart TD
     J -- No --> M
 ```
 
+
 ## Procedimiento en laboratorio (descripción breve, sin demostración)
+---
 
 Para la prueba en física, ya teniendo el módulo funcional y verificado, se exportaba el módulo a una USB y se importaba por medio del TeachPendent al controlador, en donde, dadas las configuraciones pertinentes, se cargaba. 
+
+<p align="center">
+  <img src="picture/montaje.jpg" alt="Montaje" height="400">
+</p>
 
 Antes de ejecutar el módulo y probar con las entradas digitales:
   1. Se realizaba una calibración manual del la herramienta para su TCP ya ajustado, dada una herramienta de calibración y la toma de datos sobre ese punto desde diferentes orientaciones.
