@@ -68,7 +68,7 @@ Ya teniendo el modelo del portaherramienta y el modelo de la caja, se exportan d
   1. RobotStudio, al importar estos modelos como cuerpos independientes, asigna sistemas coordenados a cada uno que sirve para referenciarlos (un sistema de coordenadas para que todo lo que se haga con o sobre ese cuerpo sea con respecto a una referencia única que reconoce un sistema de coordenadas universales)
   2. Este sistema de coordendas debe reubicarse para ambos cuerpos en función de su utilidad:
        - Para el caso del portaherramienta, se ubica en su parte inferior, donde se va a ajustar con el flange para herramientas del último eslabón del robot IRB-140. Esto, de forma que despúes de una configuración, se ajuste el sistema de coordenadas del portaherramienta con el sistema de coordenadas TCP que tiene el modelo del IRB-140 por defecto.
-           - Para el caso de la caja, se ubica en el workspace en cualquier lugar que resulte alcanzable y conveniente para el manipulador (se encuentre dentro de su espacio alcanzable, y si acaso luego se ajusta para su espacio diestro). Luego, se ubica el sistema de coordenadas de este objeto en un punto conveniente para definir los puntos para las trayectorias. En este caso, se ubica en la esquina de la cara superior más cercana al manipulador, de forma que todos los puntos tengan coordenadas con componentes positivas relativas al sistema coordenado de la torta.
+       - Para el caso de la caja, se ubica en el workspace en cualquier lugar que resulte alcanzable y conveniente para el manipulador (se encuentre dentro de su espacio alcanzable, y si acaso luego se ajusta para su espacio diestro). Luego, se ubica el sistema de coordenadas de este objeto en un punto conveniente para definir los puntos para las trayectorias. En este caso, se ubica en la esquina de la cara superior más cercana al manipulador, de forma que todos los puntos tengan coordenadas con componentes positivas relativas al sistema coordenado de la torta.
 
 <p align="center">
   <img src="picture/base_portaherramienta.png" alt="base_portaherramienta" height="300">
@@ -94,6 +94,12 @@ Por medio de la herramienta de creación de targets, se crean puntos sobre la im
   3. Movimientos a partir del comando MoveJ en reemplazo de MoveL (para evitar singularidades y problemas), sumado a movimientos MoveC.
 
 Se describe el código ahora de forma general.
+
+Se añaden, además, un target en particular para ubicar el manipulador en una posición adecuada para poner y remover con sencillez el portaherramienta, cuando esté en uso.
+
+Se identifican dos procesos: primero, el de dibujado sobre la torta, y segundo el de posicionamiento del manipulador. Para ambos procesos se asignan entradas digitales para su control en físico, y adicionalmente dos salidas digitales: la primera de estas salidas está destinada a indicar si el manipulador se encuentra en proceso de dibujado sobre la torta (en cuyo caso está la salida activa y en bajo si no se encuentra en el proceso), y la segunda para informar a la banda transportadora que se realice el movimiento de la torta (sea desde la entrada de la banda hasta el robot, o desde el robot hasta la salida de la banda).
+  - Para esto, se crearon señales digitales nombradas, respectivamente: DI_01, DI_02, DO_01 y DO_02. La anterior nomenclatura con el fin de poder emplear las salidas con el controlador a disposición en el laboratorio.
+  - Se emplearon elementos de "SmartComponents" dentro del simulador de RobotStudio para verificar la funcionalidad del código RAPID. Se asociaron, a demás, a las señales digitales del controlador.
 
 ### Descripción (resumida) del código:
 
@@ -160,6 +166,16 @@ flowchart TD
     L --> M["Vuelve al inicio del WHILE"]
     J -- No --> M
 ```
+
+## Procedimiento en laboratorio (descripción breve, sin demostración)
+
+Para la prueba en física, ya teniendo el módulo funcional y verificado, se exportaba el módulo a una USB y se importaba por medio del TeachPendent al controlador, en donde, dadas las configuraciones pertinentes, se cargaba. 
+
+Antes de ejecutar el módulo y probar con las entradas digitales:
+  1. Se realizaba una calibración manual del la herramienta para su TCP ya ajustado, dada una herramienta de calibración y la toma de datos sobre ese punto desde diferentes orientaciones.
+  2. Después del paso anterior, se posiciona el tablero/caja en una posición próxima y dentro del espacio para el manipulador. Luego se identificaba el origen del tablero/caja (que debía ser exactamente el mismo del WorkObject modelado en RobotStudio) y se definía el sistema coordenado de forma apropiada, considerando la orientación de los ejes.
+
+Finalmente, se ejecutaba y probaba el módulo.
 
 ## Presentación
 
