@@ -175,8 +175,10 @@ Antes de ejecutar el módulo y probar con las entradas digitales:
   1. Se realizaba una calibración manual del la herramienta para su TCP ya ajustado, dada una herramienta de calibración y la toma de datos sobre ese punto desde diferentes orientaciones.
   2. Después del paso anterior, se posiciona el tablero/caja en una posición próxima y dentro del espacio para el manipulador. Luego se identificaba el origen del tablero/caja (que debía ser exactamente el mismo del WorkObject modelado en RobotStudio) y se definía el sistema coordenado de forma apropiada, considerando la orientación de los ejes.
 
-Finalmente, se ejecutaba y probaba el módulo.
+Una ruta alternativa que se tomó, por limitaciones de tiempo pero igualmente funcionales, fue emplear los datos pre-cargados o en curso dentro del robot e ir ajustando en el código RAPID los datos de workspace para que resultara más rápida la obtención de resultados
 
-## Presentación
+Finalmente, se ejecuta y probaba el módulo.
+
+## Presentación y Resultados
 
 [Link al video de la presentación en youtube.](https://youtu.be/41Mnf04L6z8)
