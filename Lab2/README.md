@@ -195,4 +195,4 @@ Finalmente, se ejecuta y probaba el módulo.
 
 ## Presentación y Resultados
 
-[Link al video de la presentación en youtube.][(https://youtu.be/41Mnf04L6z8](https://youtu.be/L1O4Oo2MG3U))
+[Link al video de la presentación en youtube.](https://youtu.be/L1O4Oo2MG3U)
