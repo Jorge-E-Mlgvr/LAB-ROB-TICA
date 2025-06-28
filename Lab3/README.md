@@ -257,4 +257,4 @@ robot.MoveL(transl(x, y, z_surface + z_safe))
 ```
 Y finaliza el módulo.
 
-En el siguiente video se muestran estos resultados: [Link al video de la presentación en youtube.](https://youtu.be/L1O4Oo2MG3U)
+En el siguiente video se muestran estos resultados: [Link al video de la presentación en youtube.](https://youtu.be/XjKmvOQerTY)
