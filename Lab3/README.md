@@ -70,7 +70,15 @@ Hay varias formas de operar este manipulador:
 
 Se describe a continuación el procedimiento, en el Teach Pendant DX100, respectivo para lograr la operación manual articular y cartesiana.
 
+<p align="center">
+  <img src="picture/overall.jpg" alt="Overall" height="400">
+</p>
+
 En ambos casos, primero es necesario asegurarse de que el botón de emergencia no esté bloqueado y el manipulador se encuentre en una posición segura (preferiblemente un home). Acto seguido, se activa el modo manual girando el **selector de modo** (el cerrojo con llave, que es un switch físico) en la esquina superior izquierda hasta ubicarlo en la posición **MANUAL**. Se asegura uno que los motores de las articulaciones estén encedidos, y si no se presiona el botón **SERVO ON READY** en el centro. Luego, se procede con cada caso respectivo.
+
+<p align="center">
+  <img src="picture/botones.jpg" alt="Overall" height="400">
+</p>
 
 #### Movimiento articular
 Para este caso:
@@ -158,4 +166,95 @@ La complejidad de la interfaz de usuario y la relación entre las diferentes par
 
 ## Parte No.4: Práctica
 
-El objetivo de la parte práctica fue, por medio de RoboDK, realizar un script de Python que pudiese generar una trayectoria polar y probarla en simulación. Luego, subirla al MH6 y verificar su funcionamiento apropiado. En el siguiente video se muestran estos resultados: [Link al video de la presentación en youtube.](https://youtu.be/L1O4Oo2MG3U)
+### Código
+
+El objetivo de la parte práctica fue, por medio de RoboDK, realizar un script de Python que pudiese generar una trayectoria polar y probarla en simulación. Luego, subirla al MH6 y verificar su funcionamiento apropiado. Se comienza primero con la descripción, a grandes rasgos, funcional del código.
+
+En primer lugar el encabezado:
+
+```Python
+from robodk.robolink import *
+from robodk.robomath import *
+import math
+```
+
+Estas librerías tienen las siguientes funcionalidades: la primera es una API que permite traducir las funciones de movimiento de Python en comandos que estén en el lenguaje de RoboDK. Claramente, luego estas se traducen una segunda vez para el controlador del robot en particular. La segunda librería es de funciones matemáticas propiamente para usar con funciones de la librería de RoboDK. Luego se tiene la inicialización:
+
+```Python
+RDK = Robolink()
+robot = RDK.ItemUserPick("Selecciona un robot", ITEM_TYPE_ROBOT)
+if not robot.Valid():
+    raise Exception("No se ha seleccionado un robot válido.")
+if not robot.Connect():
+    raise Exception("No se pudo conectar al robot. Verifica que esté en modo remoto y que la configuración sea correcta.")
+if not robot.ConnectedState():
+    raise Exception("El robot no está conectado correctamente. Revisa la conexión.")
+print("Robot conectado correctamente.")
+```
+
+La primera línea crea un objeto de la clase Robolink, y la segunda permite seleccionar un robot en el caso de que se programe para más de uno. Las siguientes líneas son de verificación si la selección es válida y si la conexión está bien. _Estas son líneas que funcionarán si y solo sí se ejecuta con el controlador real, de forma que estas líneas de confirmación se deben comentar a la hora de ejecutar la simulación._
+
+```Python
+frame_name = "Frame_from_Target1"
+frame = RDK.Item(frame_name, ITEM_TYPE_FRAME)
+if not frame.Valid():
+    raise Exception(f'No se encontró el Frame "{frame_name}" en la estación.')
+
+robot.setPoseFrame(frame)
+robot.setPoseTool(robot.PoseTool())
+
+robot.setSpeed(300)
+robot.setRounding(5)
+```
+
+Este siguiente bloque de instrucciones tiene como fin definir y cargar el frame, que es el workobject sobre el cual se van a realizar la trayectorias. Dado que el frame está inclinado y posicionado, es necesario cargarlo y dada la información cargada se ajustará. En particular, estas líneas asignan el frame al robot en particular que estemos empleando, luego se indica el usao de la herramienta activa y finalmente se dan dos líneas que son parámetros **únicos** de velocidad y blending para el robot (es decir, tendran efecto a lo largo de toda la operación hasta el final de su trabajo).
+
+```Python
+num_points = 720      
+A = 30
+z_surface = 0
+z_safe = 50
+```
+
+Este siguiente bloque es de definición de parámetros que serán, básicamente, valores constantes a lo largo de la operación y útiles para realizarla. 
+  - El parámetro _num_points_ es el número de puntos o targets que tendrá en cuenta el robot: como tal, por medio de funciones lo que se hace es mover el robot de un target a otro, y por medio de código se puede hacer de forma que por medio de movimientos de tipo lineal o J se mueva a distancias cortas más o menos discretas pero tantas que cree una trayectoria suave.
+  - El parámetro _A_ es solo un factor de escala: en relación a la zona a dibujar hay una proporción dimensional que se está manejando de distancia física. Dado que, inicialmente, es muy pequeña, se multiplica este parámetro por cualquier movimiento para hacer que sea más grande la figura, los movimientos más largos, etc.
+  - El parámetro *z_surface* tiene como fin definir un nivel de altura con respecto al plano de dibujo, por si se quiere mantener un offset de _approach_ o dibujar sobre el aire. Debido a que se quiere dibujar sobre el plano, es igual a 0.
+  - Finalmente, *z_safe* es un parámetro de altura segura para aproximación y salida de la herramienta.
+
+```Python
+robot.MoveJ(transl(0, 0, z_surface + z_safe))
+robot.MoveL(transl(0, 0, z_surface))
+```
+
+Aquí comienza el dibujado. La primera línea nos sitúa en el centro de la figura a realizar, y la segunda nos acerca a la superficie.
+
+```Python
+full_turn = 2*math.pi
+
+for i in range(num_points+1):
+    t = i / num_points
+    theta = full_turn * t
+
+    r = A*(2 - 2*math.sin(theta) + (math.sin(theta)*math.sqrt(math.fabs(math.cos(theta))))/(math.sin(theta)+1.4))
+
+    x = r * math.cos(theta)
+    y = r * math.sin(theta)
+ 
+    robot.MoveL(transl(x, y, z_surface))
+```
+
+Este bloque ya describe el dibujado completo: 
+  - Se define una variable que va a indicar que, dado que es una trayectoria polar, va a girar, iniciando desde 0° hasta 360°.
+  - Ahora bien, se inserta un ciclo que define el punto a moverse con respecto a uno anterior para moverse linealmente hacia él.
+  - Dado que estamos manejando funciones polares, necesitamos un radio y un ángulo. Con ayuda del total del giro (que son 360°), se divide sobre el total de número de puntos de forma que se tenga el valor del ángulo para cada uno de todos los 720 puntos. Acto seguido, con al relación de variable dependiente (radio) a partir de la dependiente (ángulo) se obtiene la primera, y esta relación describe la figura, que es un corazón.
+  - Cada vez que se obtiene un radio, se usa en cojunto con el theta y se parametrizan a coordenadas cartesianas, puesto que la librería solo maneja coordenadas cartesianas. Se emplean, pues, fórmulas de libro.
+
+Una vez el ciclo termina, se sube la herramienta para evitar choques:
+
+```Python
+robot.MoveL(transl(x, y, z_surface + z_safe))
+```
+Y finaliza el módulo.
+
+En el siguiente video se muestran estos resultados: [Link al video de la presentación en youtube.](https://youtu.be/L1O4Oo2MG3U)
