@@ -3,7 +3,6 @@
 <p align="center">
   <img src="picture/robodk_logo.png" alt="Logo" height="300">
 </p>
----
 
 ## Introducción del laboratorio
 
@@ -12,6 +11,7 @@ Los objetivos del presente laboratorio son varios:
   1. Comprensión del manipulador Motoman MH6 y su software de manejo (en este caso, RoboDK) por medio de su comparación con el IRB-140 y Robotstudio, además de la indagación individual de este manipulador.
   2. Aprender a manejar el manipulador desde código, en particular Python.
   3. Programar una trayectoria en RoboDK, ejecutarla virtualmente (simulación) y realizarla físicamente comandado desde PC.
+
 ---
 
 ## Parte No.1: Comparación de las especificaciones técnicas del Motoman MH6 y el IRB140.
@@ -55,6 +55,7 @@ Y en segundo:
 </p>
 
 Si bien no se recibió indicación clara de aquellos que lo ajustaron, se pueden hacer las siguientes suposiciones educadas de por qué pudieron haber sido configuradas de tal forma. Se tiene en cuenta, además, que este es un manipulador de laboratorio, por lo que no tiene sentido tener varios homes para diferentes procesos. Por un lado, el robot tiene una elevación respecto al suelo de su base, y su posición más alta puede servir de home para el inicio de procesos de movimiento de cualquier tipo. El otro, por su parte, puede ser para cambios de herramienta dada su cercanía con el suelo. Nótese que en una posición tan alta como la del primer home se vuelve terriblemente incómodo cambiar de herramienta, y para una posición tan baja como la del segundo es bastante posible una colisión con cualquier objeto de trabajo a incluso moverse a una posición inicial de movimiento de la trayectoria principal.
+
 ---
 
 
@@ -92,6 +93,7 @@ El MH6 tiene cinco niveles de velocidad predefinidos para el modo manual: 5%, 15
   5. Se usan las teclas de flecha para navegar y seleccionar el nivel deseado (ej. 25%). Luego se coloca **ENTER**.
 
 Se debe recalcar que en la parte superior derecha de la pantalla, se muestra un campo que indica la velocidad activa, con un valor numérico seguido del símbolo % (por ejemplo, "Vel: 50%").
+
 ---
 
 
@@ -150,6 +152,7 @@ La generación de trayectorias con RoboDK es muy sencilla tómese el camino que 
 Las herramientas de simulación son mucho más amplias, ricas y completas en RobotStudio, por lo que se puede considerar una ventaja. Es bastante rígido también su uso, pero ventajoso a la larga, y los elementos de entorno como workobjects también se pueden ajustar con más detalle. De nuevo, RoboDK es simple, pero sencillo.
 
 La complejidad de la interfaz de usuario y la relación entre las diferentes partes del software en RobotStudio es lo que más lo puede hacer destacar. RoboDK, sin embargo, presenta condensado y directo el conjunto de herramientas básicas y opciones de uso común, y rápido, en la interfaz, sin mucho detalle o profundidad.
+
 ---
 
 
