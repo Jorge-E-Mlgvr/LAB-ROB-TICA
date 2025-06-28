@@ -36,6 +36,10 @@ Haciendo uso de los archivos suministrados de manual de especificaciones y de pr
 | **Interfaz de programación**     | Teach Pendant con lenguaje INFORM II                          | FlexPendant con lenguaje RAPID                                  |
 | **Precisión absoluta (calibración)** | No especificado                                           | Opcional con Absolute Accuracy |
 
+<p align="center">
+  <img src="picture/motoman.png" alt="Motoman" height="400">
+</p>
+
 Como se puede observar, el IRB 140 destaca mucho más por su mayor precisión (±0.03 mm frente a ±0.08 mm del MH6) y su diseño compacto, lo cual lo puede hacer ideal para espacios reducidos o tareas de ensamblaje de alta precisión. Tiene más protección lo que lo hace más adecuado para ambientes agresivos como fundiciones o procesos húmedos, quedando relegado el MH6 para tareas de ensamblaje sencillas. El Motoman MH6 ofrece un mayor alcance (1373 mm vs. 810 mm), lo cual lo favorece para operaciones de paletizado, carga/descarga o trabajos donde se necesita cubrir más área sin mover la base, y su peso más ligero también facilita la integración en células móviles. Por ende es difícil indicar la superioridad de uno o de otro: si se prioriza precisión y resistencia ambiental, el IRB 140 es superior, pero si se necesita cobertura espacial amplia y flexibilidad de montaje, el MH6 puede resultar el más conveniente.
 
 ### Homes
@@ -92,6 +96,10 @@ Para este caso
   2. Se usan las mismas teclas de dirección, pero ahora uno se guía por los otras letras imprentas: ±X, ±Y o ±Z indican los ejes y puede tener un simbolo de giro en tanto flecha curva o no. Si lo tiene, corresponde a los botones de rotación, y si no de traslación. Estos se agrupan según este criterio a la derecha e izquierda (derecha rotación e izquierda traslación).
   3. Mismo criterio de velocidad y presionar el botón de hombre muerto.
 
+<p align="center">
+  <img src="picture/direcciones.png" alt="Direcciones" height="400">
+</p>
+
 ### Cambio de velocidad
 El MH6 tiene cinco niveles de velocidad predefinidos para el modo manual: 5%, 15%, 25%, 50% y 100%. Sin embargo, se puede cambiar el nivel de velocidad de la siguiente forma:
   1. Se selecciona el modo **TEACH**.
@@ -128,6 +136,10 @@ Este proceso se puede resumir de la siguiente forma:
 Teóricamente, lo que realmente está haciendo RoboDK para mover el robot son cálculos de trayectorias por medio de cinemática inversa. A partir de esos resultados y los parámetros de movimiento, como velocidad y tipo, genera instrucciones específicas para el controlador (como MOVJ, MOVL, WAIT, etc.). Si está ejectuando en tiempo real, inicia sesión con el controlador vía Ethernet/IP o protocolo propietario y envía comandos de coordenadas XYZ y orientaciones RPY a una velocidad determinada, y el controlador ejecuta esos comandos en el orden y tiempo dado.
 
 ### Comparación RoboDK con RobotStudio
+
+<p align="center">
+  <img src="picture/abb-logo.png" alt="Logo_ABB" height="400">
+</p>
 
 Se presenta en seguida un cuadro comparativo de ambos softwares:
 
