@@ -158,5 +158,4 @@ La complejidad de la interfaz de usuario y la relación entre las diferentes par
 
 ## Parte No.4: Práctica
 
-El objetivo de la parte práctica fue, por medio de RoboDK, realizar un script de Python que pudiese generar una trayectoria polar y probarla en simulación. Luego, subirla al MH6 y verificar su funcionamiento apropiado. En el siguiente video se muestran estos resultados: 
-
+El objetivo de la parte práctica fue, por medio de RoboDK, realizar un script de Python que pudiese generar una trayectoria polar y probarla en simulación. Luego, subirla al MH6 y verificar su funcionamiento apropiado. En el siguiente video se muestran estos resultados: [Link al video de la presentación en youtube.](https://youtu.be/L1O4Oo2MG3U)
