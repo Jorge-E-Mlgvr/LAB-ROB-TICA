@@ -1,7 +1,7 @@
 # Laboratorio RoboDK
 
 <p align="center">
-  <img src="picture/robodk_logo.png" alt="Logo" height="400">
+  <img src="picture/robodk_logo.png" alt="Logo" height="300">
 </p>
 
 
