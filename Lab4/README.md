@@ -1,4 +1,4 @@
-# Laboratorio RoboDK
+# Laboratorio No.4 (_Phantom X Pincher_)
 
 <p align="center">
   <img src="picture/robodk_logo.png" alt="Logo" height="300">
@@ -19,7 +19,9 @@ Los objetivos del presente laboratorio son varios:
 
 El robot _Phantom X Pincher_ es un robot pequeño con una gripper de prensa en su extremo. Cuenta con seis grados de libertad, todas son rotacionales; sin embargo, la sexta articulación funciona exclusivamente para el gripper, funguiendo con un mecanismo sencillo para transformar movimiento rotacional en lineal (cierre y apertura de la garra), de forma que no incide ni en la orientación del gripper ni en la posición del TCP, o siquiera cambia la configuración del robot. Así pues, se puede analizar su cinemática directa con cinco articulaciones únicamente:
 
-
+<p align="center">
+  <img src="images/Cinemática_directa_DH.png" alt="Motoman" width="400">
+</p>
 
 ### Generalidades a comparar
 Haciendo uso de los archivos suministrados de manual de especificaciones y de producto del IRB-140, en conjunto con el material suministrado del manual de referencia del MH6, se realizó el siguiente cuadro comparativo:
