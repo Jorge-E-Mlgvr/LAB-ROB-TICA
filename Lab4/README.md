@@ -53,14 +53,19 @@ Observe que no necesariamente coinciden con las medidas que se dieron en la tabl
 
 ## Parte No.2: Manejo del _Phantom X Pincher_ con ROS2.
 
-### Movimiento
+Antes de proceder con su manejo particular, se debe ser un poco más exacto con el vocabulario aquí y referirse al _Phantom_ en tanto manipulador y no como un robot, a pesar de que esta última acepción es válida también. La necesidad nace del hecho del controlador en particular. Si bien el hardware de control siempre es el mismo (en terminos de control y HMI), es decir el computador, el software de manejo puede variar. Según la documentación oficial hay diversas maneras de manejo tanto con software dedicado de Dynamixel como ROS2, y ROS2 en tanto _framework_ abre la posibilidad de programación tanto de rutinas, del "controlador" y de una HMI virtual para su manejo. 
 
-Hay varias formas de operar este manipulador:
-  - Movimiento manual articular.
-  - Movimiento manual cartesiano (rotación y traslación).
-  - Movimiento automático de varios tipos.
+Así pues, destáquese que aquí se ha procedido con el uso de Python y ROS2 en tanto framework para manejar el manipulador, de la siguiente manera:
+  1. Un script de manejo de los servos en particular, para el posicionamiento y diseño de rutinas del manipulador.
+  2. Un script que crea una interfaz de manejo virtual haciendo uso de la librería _Tkinter_, que vincula al anterior código.
+  3. Un script que utiliza los tópicos y servicios de ROS, basándose en la estructura del Dynamixel Workbench, para controlar las articulaciones del manipulador.
+  4. Dos scripts de conexión: uno que permite la publicación y otro de suscripción en cada tópico de controlador por articulación.
 
-Se describe a continuación el procedimiento, en el Teach Pendant DX100, respectivo para lograr la operación manual articular y cartesiana.
+Destaca que algunos de estos scripts se podrían integrar entre sí. De hecho, comparten muchas elementos y ocasionalmente estructuras. El motivo de esta segmentación es para mejor organización y distinción funcional, para llevar a cabo de manera secuencial los objetivos del laboratorio.
+
+### Primer Script: Rutinas y posicionamientos particulares <.
+
+Este es el script de manejo general. A continuación se describen las partes relevantes del mismo.
 
 <p align="center">
   <img src="picture/overall.jpg" alt="Overall" height="400">
