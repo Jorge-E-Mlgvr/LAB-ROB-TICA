@@ -48,10 +48,11 @@ Observe que no necesariamente coinciden con las medidas que se dieron en la tabl
   <img src="images/pincher_diagrama.jpg" alt="Motoman" height="600">
 </p>
 
----
 
 
 ## Parte No.2: Manejo del _Phantom X Pincher_ con ROS2.
+
+---
 
 Antes de proceder con su manejo particular, se debe ser un poco más exacto con el vocabulario aquí y referirse al _Phantom_ en tanto manipulador y no como un robot, a pesar de que esta última acepción es válida también. La necesidad nace del hecho del controlador en particular. Si bien el hardware de control siempre es el mismo (en terminos de control y HMI), es decir el computador, el software de manejo puede variar. Según la documentación oficial hay diversas maneras de manejo tanto con software dedicado de Dynamixel como ROS2, y ROS2 en tanto _framework_ abre la posibilidad de programación tanto de rutinas, del "controlador" y de una HMI virtual para su manejo. 
 
@@ -225,9 +226,9 @@ Es necesario mencionar que esta rutina ejemplo en particular será la empleada p
 
 Esto se mostrará en el video del final.
 
+
+
 ### Segundo Script: HMI (`pincher_gui.py`).
-
-
 
 ---
 
