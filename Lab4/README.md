@@ -25,22 +25,14 @@ El robot _Phantom X Pincher_ es un robot pequeño con una gripper de prensa en s
 
 Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
 
-| i                   | $\theta$                                               | **d**                                                  | a  | $\alfa$ |
-|----------------------------------|---------------------------------------------------------------|------------------------------------------------------------------|
-| **Carga máxima (payload)**       | 6 kg                                                          | 6 kg                                                             |
-| **Alcance máximo (reach)**       | 1373 mm                                                       | 810 mm                                                           |
-| **Grados de libertad (ejes)**    | 6                                                             | 6                                                                |
-| **Repetibilidad**                | ±0.08 mm                                                      | ±0.03 mm                                                         |
-| **Velocidad máx. conjunta**      | Hasta 18700 mm/s (sumatoria de ejes)                          | Hasta 6.5 m/s dependiendo de configuración y carga |
-| **Velocidades por eje**          | Varían entre 145 y 375 °/s dependiendo del eje                | Hasta 460 °/s en algunos ejes |
-| **Rango de movimiento por eje**  | -180° a +180° en la mayoría de ejes                           | Ejes con rangos entre ±120° y ±300° dependiendo del eje         |
-| **Montaje**                      | Piso, techo, pared                                            | Piso, pared, techo, invertido (multiorientación)                |
-| **Peso del robot**               | Aprox. 130 kg                                                 | 140 kg           |
-| **Aplicaciones típicas**         | Manipulación de materiales, soldadura, ensamblaje             | Ensamblaje, soldadura, manejo de materiales, fundición (Foundry Plus) |
-| **Protección ambiental**         | IP54 (opcional IP65 con protección extra)                     | IP67 (Foundry Plus 2, ideal para fundición) |
-| **Controlador**                  | NX100 o DX100 (dependiendo del año)                           | IRC5 con RobotWare                                              |
-| **Interfaz de programación**     | Teach Pendant con lenguaje INFORM II                          | FlexPendant con lenguaje RAPID                                  |
-| **Precisión absoluta (calibración)** | No especificado                                           | Opcional con Absolute Accuracy |
+| i | $\theta_i$ | **d_i** | **a_i** | $\alpha_i$ | **Offset** |
+|---|---|---|---|---|---|
+| **1** | $\theta_1$ | 42 | 0 | $\pi/2$ | $\pi/2$ |
+| **2** | $\theta_2$ | 0 | 104.5 | 0 | $\pi/2$ |
+| **3** | $\theta_3$ | 0 | 103 | 0 | 0 |
+| **4** | $\theta_4$ | 0 | 0 | $\pi/2$ | $\pi/2$ |
+| **5** | $\theta_5$ | 65 | 0 | 0 | $\pi/2$ |
+
 
 <p align="center">
   <img src="picture/motoman.png" alt="Motoman" height="600">
