@@ -25,7 +25,6 @@ El robot _Phantom X Pincher_ es un robot pequeño con una gripper de prensa en s
 
 Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
 
-<div align="center">
 | i | $\theta_i$ | $d_i$ | $a_i$ | $\alpha_i$ | **Offset** |
 |---|---|---|---|---|---|
 | **1** | $\theta_1$ | 42 | 0 | $\pi/2$ | $\pi/2$ |
@@ -33,7 +32,6 @@ Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
 | **3** | $\theta_3$ | 0 | 103 | 0 | 0 |
 | **4** | $\theta_4$ | 0 | 0 | $\pi/2$ | $\pi/2$ |
 | **5** | $\theta_5$ | 65 | 0 | 0 | $\pi/2$ |
-</div>
 
 
 <p align="center">
