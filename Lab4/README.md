@@ -1,7 +1,7 @@
 # Laboratorio No.4 (_Phantom X Pincher_)
 
 <p align="center">
-  <img src="picture/robodk_logo.png" alt="Logo" height="300">
+  <img src="images/modelo.jpg" alt="Logo" height="300">
 </p>
 
 ## Introducción del laboratorio
