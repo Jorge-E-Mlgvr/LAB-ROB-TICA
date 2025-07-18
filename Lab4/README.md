@@ -33,6 +33,16 @@ Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
 | **4** | $\theta_4$ | 0 | 0 | $\pi/2$ | $\pi/2$ |
 | **5** | $\theta_5$ | 65 | 0 | 0 | $\pi/2$ |
 
+Sin embargo, obsérvese que estas medidas son solo las más cercanas entre articulaciones (es decir, las distancias normales a los ejes de las articulaciones). Son relevantes también las dimensiones físicas de algunos de sus componentes, pues determinarán muchas de las limitaciones espaciales o capacidades de movimiento del mismo, inclueyendo aplicaciones. Se obtuvieron las siguientes haciendo uso de un pie de rey:
+
+| **Eslabón (físico)** | ¨**Medidas** |
+|---|---|
+| 1era a 2da (extremos) | 103.03 |
+| 2da a 3ra (extremos) | 103.35 |
+| 3era base a 3era extremo | 73.67 |
+| 3era extremo hasta el TCP | 108.74 |
+
+Observe que no necesariamente coinciden con las medidas que se dieron en la tabla DH, puesto que este busca una simplificación cinemática que dadas las articulaciones y su relación espacial dé el mismo efecto del TCP que el manipulador real. Ahora bien, si se grafican con MATLAB únicamente la tabla de DH se puede ver el siguiente modelo:
 
 <p align="center">
   <img src="images/pincher_diagrama.jpg" alt="Motoman" height="600">
