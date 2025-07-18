@@ -186,7 +186,7 @@ Es necesario mencionar que esta rutina ejemplo en particular será la empleada p
 
 Ahora, un diagrama de flujo de las acciones de este script:
 
-```Mermaid
+```mermaid
 graph TD
     A[Inicio del Script] --> B[Inicialización de ROS2];
     B --> C(Crear instancia de PincherController);
