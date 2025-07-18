@@ -226,12 +226,10 @@ Es necesario mencionar que esta rutina ejemplo en particular será la empleada p
 
 Esto se mostrará en el video del final.
 
+---
 
 
 ### Segundo Script: HMI (`pincher_gui.py`).
-
----
-
 
 ## Parte No.3: RoboDK
 
