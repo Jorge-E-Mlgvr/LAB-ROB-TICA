@@ -25,7 +25,7 @@ El robot _Phantom X Pincher_ es un robot pequeño con una gripper de prensa en s
 
 Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
 
-| i | $\theta_i$ | $d_i$ | $a_i$ | $\alpha_i$ | **Offset** |
+- | i | $\theta_i$ (rad) | $d_i$ (mm) | $a_i$ (mm) | $\alpha_i$ (rad) | **Offset** (rad) |
 |---|---|---|---|---|---|
 | **1** | $\theta_1$ | 42 | 0 | $\pi/2$ | $\pi/2$ |
 | **2** | $\theta_2$ | 0 | 104.5 | 0 | $\pi/2$ |
@@ -35,7 +35,7 @@ Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
 
 Sin embargo, obsérvese que estas medidas son solo las más cercanas entre articulaciones (es decir, las distancias normales a los ejes de las articulaciones). Son relevantes también las dimensiones físicas de algunos de sus componentes, pues determinarán muchas de las limitaciones espaciales o capacidades de movimiento del mismo, inclueyendo aplicaciones. Se obtuvieron las siguientes haciendo uso de un pie de rey:
 
-| **Eslabón (físico)** | ¨**Medidas** |
+| **Eslabón (físico)** | **Medidas (mm)** |
 |---|---|
 | 1era a 2da (extremos) | 103.03 |
 | 2da a 3ra (extremos) | 103.35 |
