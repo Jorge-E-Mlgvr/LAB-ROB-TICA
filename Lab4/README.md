@@ -25,7 +25,7 @@ El robot _Phantom X Pincher_ es un robot pequeño con una gripper de prensa en s
 
 Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
 
-- | i | $\theta_i$ (rad) | $d_i$ (mm) | $a_i$ (mm) | $\alpha_i$ (rad) | **Offset** (rad) |
+| i | $\theta_i$ (rad) | $d_i$ (mm) | $a_i$ (mm) | $\alpha_i$ (rad) | **Offset** (rad) |
 |---|---|---|---|---|---|
 | **1** | $\theta_1$ | 42 | 0 | $\pi/2$ | $\pi/2$ |
 | **2** | $\theta_2$ | 0 | 104.5 | 0 | $\pi/2$ |
@@ -48,30 +48,10 @@ Observe que no necesariamente coinciden con las medidas que se dieron en la tabl
   <img src="images/pincher_diagrama.jpg" alt="Motoman" height="600">
 </p>
 
-Como se puede observar, el IRB 140 destaca mucho más por su mayor precisión (±0.03 mm frente a ±0.08 mm del MH6) y su diseño compacto, lo cual lo puede hacer ideal para espacios reducidos o tareas de ensamblaje de alta precisión. Tiene más protección lo que lo hace más adecuado para ambientes agresivos como fundiciones o procesos húmedos, quedando relegado el MH6 para tareas de ensamblaje sencillas. El Motoman MH6 ofrece un mayor alcance (1373 mm vs. 810 mm), lo cual lo favorece para operaciones de paletizado, carga/descarga o trabajos donde se necesita cubrir más área sin mover la base, y su peso más ligero también facilita la integración en células móviles. Por ende es difícil indicar la superioridad de uno o de otro: si se prioriza precisión y resistencia ambiental, el IRB 140 es superior, pero si se necesita cobertura espacial amplia y flexibilidad de montaje, el MH6 puede resultar el más conveniente.
-
-### Homes
-El Motoman MH6 permite ajustar su posición "home" o de referencia con hasta dos posiciones de home configurables: **Home 1** y **Home 2**. Según nuestra indagación, esto puede ser útil dado que en aplicaciones con diferentes secuencias o configuraciones de trabajo, puede ser útil definir más de un punto de referencia inicial para facilitar tareas específicas o evitar colisiones al encender el robot en distintos contextos operativos. Estas posiciones se configuran desde el Teach Pendant y pueden ser modificadas mediante el menú de programación o ajustes del sistema, típicamente bajo funciones de referencia de posición o coordenadas base. 
-El ABB IRB 140 solamente tiene una única posición de referencia, que corresponde al sistema de coordenadas base y la calibración absoluta almacenada. Esta posición "home" es establecida en el proceso de calibración y sincronización con el sistema IRC5. La precisión del IRB 140 depende de mantener esa posición constante; no está pensado para cambiarse frecuentemente ni tener múltiples homes, lo cual está alineado con su enfoque en precisión y repetibilidad.
-
-Ya en la operación física de estos elementos, se identifican dos homes predefinidos que fueron configurados en laboratorio. El primero es el siguiente
-
-<p align="center">
-  <img src="picture/home1.jpg" alt="Primer Home" height="400">
-</p>
-
-Y en segundo:
-
-<p align="center">
-  <img src="picture/home2.jpg" alt="Segundo Home" height="400">
-</p>
-
-Si bien no se recibió indicación clara de aquellos que lo ajustaron, se pueden hacer las siguientes suposiciones educadas de por qué pudieron haber sido configuradas de tal forma. Se tiene en cuenta, además, que este es un manipulador de laboratorio, por lo que no tiene sentido tener varios homes para diferentes procesos. Por un lado, el robot tiene una elevación respecto al suelo de su base, y su posición más alta puede servir de home para el inicio de procesos de movimiento de cualquier tipo. El otro, por su parte, puede ser para cambios de herramienta dada su cercanía con el suelo. Nótese que en una posición tan alta como la del primer home se vuelve terriblemente incómodo cambiar de herramienta, y para una posición tan baja como la del segundo es bastante posible una colisión con cualquier objeto de trabajo a incluso moverse a una posición inicial de movimiento de la trayectoria principal.
-
 ---
 
 
-## Parte No.2: Manejo del Motoman MH6.
+## Parte No.2: Manejo del _Phantom X Pincher_ con ROS2.
 
 ### Movimiento
 
