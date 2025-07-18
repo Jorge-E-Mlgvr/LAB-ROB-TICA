@@ -63,7 +63,7 @@ Así pues, destáquese que aquí se ha procedido con el uso de Python y ROS2 en 
 
 Destaca que algunos de estos scripts se podrían integrar entre sí. De hecho, comparten muchas elementos y ocasionalmente estructuras. El motivo de esta segmentación es para mejor organización y distinción funcional, para llevar a cabo de manera secuencial los objetivos del laboratorio.
 
-### Primer Script: Rutinas y posicionamientos particulares <.
+### Primer Script: Rutinas y posicionamientos particulares `control_servo.py`.
 
 Este es el script de manejo general. A continuación se describen las partes relevantes del mismo.
 
