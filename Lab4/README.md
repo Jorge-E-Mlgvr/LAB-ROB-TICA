@@ -35,7 +35,7 @@ Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
 
 
 <p align="center">
-  <img src="picture/motoman.png" alt="Motoman" height="600">
+  <img src="images/pincher_diagrama.jpg" alt="Motoman" height="600">
 </p>
 
 Como se puede observar, el IRB 140 destaca mucho más por su mayor precisión (±0.03 mm frente a ±0.08 mm del MH6) y su diseño compacto, lo cual lo puede hacer ideal para espacios reducidos o tareas de ensamblaje de alta precisión. Tiene más protección lo que lo hace más adecuado para ambientes agresivos como fundiciones o procesos húmedos, quedando relegado el MH6 para tareas de ensamblaje sencillas. El Motoman MH6 ofrece un mayor alcance (1373 mm vs. 810 mm), lo cual lo favorece para operaciones de paletizado, carga/descarga o trabajos donde se necesita cubrir más área sin mover la base, y su peso más ligero también facilita la integración en células móviles. Por ende es difícil indicar la superioridad de uno o de otro: si se prioriza precisión y resistencia ambiental, el IRB 140 es superior, pero si se necesita cobertura espacial amplia y flexibilidad de montaje, el MH6 puede resultar el más conveniente.
