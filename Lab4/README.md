@@ -63,45 +63,171 @@ Así pues, destáquese que aquí se ha procedido con el uso de Python y ROS2 en 
 
 Destaca que algunos de estos scripts se podrían integrar entre sí. De hecho, comparten muchas elementos y ocasionalmente estructuras. El motivo de esta segmentación es para mejor organización y distinción funcional, para llevar a cabo de manera secuencial los objetivos del laboratorio.
 
-### Primer Script: Rutinas y posicionamientos particulares `control_servo.py`.
+### Primer Script: Rutinas y posicionamientos particulares (`control_servo.py`).
 
-Este es el script de manejo general. A continuación se describen las partes relevantes del mismo.
+Este es el script de manejo general y para controlar el robot manipulador. A continuación se describen las partes relevantes del mismo. Más exactamente, es un nodo de ROS2 que se encarga de la cinemática directa del manipulador _Phantom X Pincher_, manejando las articulaciones del brazo robótico mediante comandos de posición enviados a los servomotores _Dynamixel AX-12A_. El código establece la comunicación, configura los parámetros de los motores, y envía posiciones angulares objetivo a cada uno de ellos.
 
-<p align="center">
-  <img src="picture/overall.jpg" alt="Overall" height="400">
-</p>
+```Python
+import rclpy
+from rclpy.node import Node
+from dynamixel_sdk import PortHandler, PacketHandler
+import time
+```
 
-En ambos casos, primero es necesario asegurarse de que el botón de emergencia no esté bloqueado y el manipulador se encuentre en una posición segura (preferiblemente un home). Acto seguido, se activa el modo manual girando el **selector de modo** (el cerrojo con llave, que es un switch físico) en la esquina superior izquierda hasta ubicarlo en la posición **MANUAL**. Se asegura uno que los motores de las articulaciones estén encedidos, y si no se presiona el botón **SERVO ON READY** en el centro. Luego, se procede con cada caso respectivo.
+Inicialmete se instanción las bibliotecas `rclpy` para la comunicación con ROS2/creación del nodo y `dynamixel_sdk` para interactuar directamente con los servomotores Dynamixel AX-12A que componen las articulaciones del robot. `PacketHandler` y `PortHandler` son clases de esa segunda biblioteca para manejar la comunicación serial y la creación de paquetes de datos para los servomotores Dynamixel.
 
-<p align="center">
-  <img src="picture/botones.jpg" alt="Overall" height="400">
-</p>
+```Python
+ADDR_TORQUE_ENABLE    = 24
+ADDR_GOAL_POSITION    = 30
+ADDR_MOVING_SPEED     = 32
+ADDR_TORQUE_LIMIT     = 34
+ADDR_PRESENT_POSITION = 36
+```
 
-#### Movimiento articular
-Para este caso:
-  1. Se presiona el botón **COORD** hasta que en la pantalla aparezca el modo "Joint" o "EJE".
-  2. Se usan las teclas de dirección +/- en el grupo de cursores (los 6 pares de teclas: "S", "L", "U", "R", "B", "T"). Se encuentran en el centro del Teach en el lado derecho e izquierdo (para ejes básicos y de muñeca).
-  3. Uno puede ajustar la velocidad con las teclas de en medio y se debe poder observar el cambio en la pantalla. Además, se debe mantener presionado el botón de hombre muerto cuando se presionen las teclas de dirección.
+Acto seguido se declaran las direcciones de registro, con diferentes finalidades del código. En orden: para habilitar o deshabilitar el torque del motor, para escribir la posición angular objetivo, para controlar la velocidad del movimiento, para establecer el límite máximo de torque y para leer la posición angular actual del motor.
 
-#### Movimiento cartesiano
-Para este caso
-  1. Se presiona el botón **COORD** hasta que en la pantalla aparezca el modo "RECT".
-  2. Se usan las mismas teclas de dirección, pero ahora uno se guía por los otras letras imprentas: ±X, ±Y o ±Z indican los ejes y puede tener un simbolo de giro en tanto flecha curva o no. Si lo tiene, corresponde a los botones de rotación, y si no de traslación. Estos se agrupan según este criterio a la derecha e izquierda (derecha rotación e izquierda traslación).
-  3. Mismo criterio de velocidad y presionar el botón de hombre muerto.
+Inmediatamente después se da el código del nodo: se declara la clase `PincherController`y se definen sus elementos (no se muestran aquí por extensión, pero se describen sus funciones). En esta se inicializa el nodo, se declaran los parámetros configurables (`port`, `baudrate`, `dxl_ids`, `goal_positions`, `moving_speed`, `torque_limit` y `delay`); de entre ellos es fácil deducir su función, a excepción de `dxl_ids`. Este último es una lista de los IDs de los servomotores del robot (ej. [1, 2, 3, 4, 5]). Después de hacer el manejo de la comunicación, la validación, se pasa al siguiente bloque:
 
-<p align="center">
-  <img src="picture/direcciones.png" alt="Direcciones" height="400">
-</p>
+```Python
+# 1) Configurar torque_limit, velocidad y enviar posición a cada servo
+for dxl_id, goal in zip(dxl_ids, goal_positions):
+    # Limitar torque
+    packet.write2ByteTxRx(port, dxl_id, ADDR_TORQUE_LIMIT, torque_limit)
+    # Limitar velocidad
+    packet.write2ByteTxRx(port, dxl_id, ADDR_MOVING_SPEED, moving_speed)
+    # Habilitar torque
+    packet.write1ByteTxRx(port, dxl_id, ADDR_TORQUE_ENABLE, 1)
+    # Enviar posición objetivo
+    packet.write2ByteTxRx(port, dxl_id, ADDR_GOAL_POSITION, goal)
+    self.get_logger().info(f'[ID {dxl_id}] → goal={goal}, speed={moving_speed}, torque_limit={torque_limit}')
+    time.sleep(2)
 
-### Cambio de velocidad
-El MH6 tiene cinco niveles de velocidad predefinidos para el modo manual: 5%, 15%, 25%, 50% y 100%. Sin embargo, se puede cambiar el nivel de velocidad de la siguiente forma:
-  1. Se selecciona el modo **TEACH**.
-  2. Se activan los servos con **SERVO ON READY**.
-  3. Presiona la tecla [SELECT].
-  4. En el menú se selecciona la opción "Velocidad manual" o similar (puede estar en inglés como "Manual Speed").
-  5. Se usan las teclas de flecha para navegar y seleccionar el nivel deseado (ej. 25%). Luego se coloca **ENTER**.
+# 2) (Opcional) Leer y mostrar posición actual
+for dxl_id in dxl_ids:
+    pos, _, _ = packet.read2ByteTxRx(port, dxl_id, ADDR_PRESENT_POSITION)
+    self.get_logger().info(f'[ID {dxl_id}] posición actual={pos}')
 
-Se debe recalcar que en la parte superior derecha de la pantalla, se muestra un campo que indica la velocidad activa, con un valor numérico seguido del símbolo % (por ejemplo, "Vel: 50%").
+# 3) Esperar a que todos los servos alcancen la posición
+self.get_logger().info(f'Esperando {delay_seconds}s para completar movimiento...')
+time.sleep(delay_seconds)
+
+# 4) Apagar torque en todos los servos
+def terminar(self):
+for dxl_id in self.dxl_ids:
+    self.packet.write1ByteTxRx(self.port, dxl_id, ADDR_TORQUE_ENABLE, 0)
+
+# 5) Cerrar puerto y terminar nodo
+self.port.closePort()
+rclpy.shutdown()
+```
+
+Este bloque de dos bucles y uno de espera tienen como objetivo iterar sobre cada motor para realizar la siguiente secuencia de acciones, con el fin de llevar paso a paso el movimiento del manipulador:
+  1. Configura el `torque_limit` y el `moving_speed` de cada motor.
+  2. Habilita el torque (`TORQUE_ENABLE`) en cada servomotor.
+  3. Envía la posición objetivo (`GOAL_POSITION`) a cada motor para iniciar el movimiento.
+  4. Lee la posición actual del motor y la imprime en el log del nodo.
+  5. Se introduce una pausa, esperando que todas las posiciones se hayan enviado con el fin de permitir que todos los motores alcanzen su posición final.
+  6. Se deshabilita el torque en todos los servos.
+  7. Se cierra el puerto y se apaga el nodo.
+       
+Este bloque de instrucciones se complementa, luego, con los siguientes para poder generar una rutina:
+
+```Python
+    def cambioPos(self, newPos):
+        if len(newPos) != len(self.dxl_ids):
+            self.get_logger().error("La nueva posición debe tener la misma longitud que dxl_ids")
+            return
+
+        self.goal_positions = newPos
+
+        for dxl_id, goal in zip(self.dxl_ids, self.goal_positions):
+            self.packet.write2ByteTxRx(self.port, dxl_id, ADDR_GOAL_POSITION, goal)
+            self.get_logger().info(
+                f'[ID {dxl_id}] → goal={goal}, speed={self.moving_speed}, torque_limit={self.torque_limit}'
+            )
+            time.sleep(2)
+```
+
+Este método permite cambiar la posición del robot a una nueva configuración. Valida la longitud de la nueva lista de posiciones, itera sobre cada motor y envía la nueva posición objetivo (`GOAL_POSITION`). Luego de esto vienen las funciones principales donde se puede programar la plantilla de la rutina como tal, jugando con listas de posiciones y llamado de métodos. Aquí un ejemplo de una en particular: 
+
+```Python
+def main(args=None):
+    rclpy.init(args=args)
+    Pincher = PincherController()
+    pos0 = [512, 512, 512, 512, 512] 
+    pos1 = [582, 582, 568, 454, 512]
+    pos2 = [412, 610, 426, 596, 512]
+    pos3 = [753, 454, 667, 582, 512]
+    pos4 = [738, 412, 667, 383, 512]
+
+    '''time.sleep(2)
+    Pincher.cambioPos(pos1)
+    time.sleep(2)
+    Pincher.cambioPos(pos2)
+    time.sleep(2)
+    Pincher.cambioPos(pos3)
+    time.sleep(2)
+    Pincher.cambioPos(pos4)
+    time.sleep(2)
+    Pincher.cambioPos(pos0)
+    Pincher.terminar()
+    #while True:'''
+
+if __name__ == '__main__':
+    main()
+```
+
+Es necesario mencionar que esta rutina ejemplo en particular será la empleada para llevar a cabo la tarea del laboratorio que solicita que se probaran las poses generadas por:
+  - $0$, $0$, $0$, $0$, $0$.
+  - $25$, $25$, $20$, $-20$, $0$.
+  - $-35$, $35$, $-30$, $30$, $0$.
+  - $85$, $-20$, $55$, $25$, $0$.
+  - $80$, $-35$, $55$, $-45$, $0$.
+
+Ahora, un diagrama de flujo de las acciones de este script:
+
+```Mermaid
+graph TD
+    A[Inicio del Script] --> B[Inicialización de ROS2];
+    B --> C(Crear instancia de PincherController);
+    C --> D{Constructor de PincherController};
+    D --> E[Obtener y declarar parámetros ids, posiciones, velocidad, etc.];
+    E --> F[Inicializar comunicación con Dynamixel SDK];
+    F --> G{Validar si la longitud de listas coincide?};
+    G -- No --> H[Log error y terminar script];
+    G -- Sí --> I[Bucle para cada ID de servo motor];
+
+    I --> J[#1 Establecer Límite de Torque];
+    J --> K[#2 Establecer Velocidad de Movimiento];
+    K --> L[#3 Habilitar Torque];
+    L --> M[#4 Enviar Posición Objetivo];
+    M --> N[Pausa de 2s para movimiento secuencial];
+    N --> I;
+
+    I -- Bucle Completo --> O[Esperar 'delay_seconds' para alcanzar poses];
+    O --> P{Bucle de Poses del Laboratorio};
+    P -- Ejecutar secuencialmente --> Q[Llamar cambioPos a 'pos1'];
+    Q --> R[Pausa de 2s];
+    R --> S[Llamar cambioPos a 'pos2'];
+    S --> T[Pausa de 2s];
+    T --> U[Llamar cambioPos a 'pos3'];
+    U --> V[Pausa de 2s];
+    V --> W[Llamar cambioPos a 'pos4'];
+    W --> X[Pausa de 2s];
+    X --> Y[Llamar cambioPos a 'pos0'];
+    Y --> Z[Pausa de 2s];
+    Z --> Z1[Llamar Pincher.terminar];
+    Z1 --> AA[Deshabilitar torque en todos los servos];
+    AA --> AB[Cerrar puerto serial];
+    AB --> AC[Terminar nodo de ROS2];
+    AC --> AD[Fin del Script];
+```
+
+Esto se mostrará en el video del final.
+
+### Segundo Script: HMI (`pincher_gui.py`).
+
+
 
 ---
 
