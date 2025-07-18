@@ -67,7 +67,7 @@ Destaca que algunos de estos scripts se podrían integrar entre sí. De hecho, c
 
 Este es el script de manejo general y para controlar el robot manipulador. A continuación se describen las partes relevantes del mismo. Más exactamente, es un nodo de ROS2 que se encarga de la cinemática directa del manipulador _Phantom X Pincher_, manejando las articulaciones del brazo robótico mediante comandos de posición enviados a los servomotores _Dynamixel AX-12A_. El código establece la comunicación, configura los parámetros de los motores, y envía posiciones angulares objetivo a cada uno de ellos.
 
-```Python
+```python
 import rclpy
 from rclpy.node import Node
 from dynamixel_sdk import PortHandler, PacketHandler
@@ -76,7 +76,7 @@ import time
 
 Inicialmete se instanción las bibliotecas `rclpy` para la comunicación con ROS2/creación del nodo y `dynamixel_sdk` para interactuar directamente con los servomotores Dynamixel AX-12A que componen las articulaciones del robot. `PacketHandler` y `PortHandler` son clases de esa segunda biblioteca para manejar la comunicación serial y la creación de paquetes de datos para los servomotores Dynamixel.
 
-```Python
+```python
 ADDR_TORQUE_ENABLE    = 24
 ADDR_GOAL_POSITION    = 30
 ADDR_MOVING_SPEED     = 32
@@ -88,7 +88,7 @@ Acto seguido se declaran las direcciones de registro, con diferentes finalidades
 
 Inmediatamente después se da el código del nodo: se declara la clase `PincherController`y se definen sus elementos (no se muestran aquí por extensión, pero se describen sus funciones). En esta se inicializa el nodo, se declaran los parámetros configurables (`port`, `baudrate`, `dxl_ids`, `goal_positions`, `moving_speed`, `torque_limit` y `delay`); de entre ellos es fácil deducir su función, a excepción de `dxl_ids`. Este último es una lista de los IDs de los servomotores del robot (ej. [1, 2, 3, 4, 5]). Después de hacer el manejo de la comunicación, la validación, se pasa al siguiente bloque:
 
-```Python
+```python
 # 1) Configurar torque_limit, velocidad y enviar posición a cada servo
 for dxl_id, goal in zip(dxl_ids, goal_positions):
     # Limitar torque
@@ -132,7 +132,7 @@ Este bloque de dos bucles y uno de espera tienen como objetivo iterar sobre cada
        
 Este bloque de instrucciones se complementa, luego, con los siguientes para poder generar una rutina:
 
-```Python
+```python
     def cambioPos(self, newPos):
         if len(newPos) != len(self.dxl_ids):
             self.get_logger().error("La nueva posición debe tener la misma longitud que dxl_ids")
@@ -150,7 +150,7 @@ Este bloque de instrucciones se complementa, luego, con los siguientes para pode
 
 Este método permite cambiar la posición del robot a una nueva configuración. Valida la longitud de la nueva lista de posiciones, itera sobre cada motor y envía la nueva posición objetivo (`GOAL_POSITION`). Luego de esto vienen las funciones principales donde se puede programar la plantilla de la rutina como tal, jugando con listas de posiciones y llamado de métodos. Aquí un ejemplo de una en particular: 
 
-```Python
+```python
 def main(args=None):
     rclpy.init(args=args)
     Pincher = PincherController()
@@ -177,14 +177,7 @@ if __name__ == '__main__':
     main()
 ```
 
-Es necesario mencionar que esta rutina ejemplo en particular será la empleada para llevar a cabo la tarea del laboratorio que solicita que se probaran las poses generadas por:
-  - $0$, $0$, $0$, $0$, $0$.
-  - $25$, $25$, $20$, $-20$, $0$.
-  - $-35$, $35$, $-30$, $30$, $0$.
-  - $85$, $-20$, $55$, $25$, $0$.
-  - $80$, $-35$, $55$, $-45$, $0$.
-
-Ahora, un diagrama de flujo de las acciones de este script:
+Ahora, un diagrama de flujo de todas estas acciones de este script:
 
 ```mermaid
 graph TD
@@ -222,6 +215,13 @@ graph TD
     AB --> AC[Terminar nodo de ROS2];
     AC --> AD[Fin del Script];
 ```
+
+Es necesario mencionar que esta rutina ejemplo en particular será la empleada para llevar a cabo la tarea del laboratorio que solicita que se probaran las poses generadas por:
+  - $0$, $0$, $0$, $0$, $0$.
+  - $25$, $25$, $20$, $-20$, $0$.
+  - $-35$, $35$, $-30$, $30$, $0$.
+  - $85$, $-20$, $55$, $25$, $0$.
+  - $80$, $-35$, $55$, $-45$, $0$.
 
 Esto se mostrará en el video del final.
 
