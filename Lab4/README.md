@@ -405,7 +405,17 @@ Con lo anterior, se cumple el requisito de publicación al l crear un publicador
 
 ## Parte No.3: Prueba Física.
 
-Se muestra el siguiente plano de planta:
+El manipulador en particular con el cual se hicieron los testeos y pruebas correspondientes es el siguiente:
+
+<p align="center">
+  <img src="images/overall.jpg" alt="Motoman" height="600">
+</p>
+
+Que muestra el siguiente plano de planta (con algunas medidas relevantes para su manejo):
+
+<p align="center">
+  <img src="images/plano.png" alt="Motoman" height="600">
+</p>
 
 En el siguiente video se muestran estos resultados: [Link al video de la presentación en youtube.](https://youtu.be/XjKmvOQerTY)
 
