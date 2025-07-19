@@ -417,5 +417,5 @@ Que muestra el siguiente plano de planta (con algunas medidas relevantes para su
   <img src="images/plano.png" alt="Motoman" height="600">
 </p>
 
-En el siguiente video se muestran estos resultados: [Link al video de la presentación en youtube.](https://youtu.be/7Tnz1caRR-I)
+En el siguiente video se muestran los resultados: [Link al video de a la demostración en youtube.](https://youtu.be/7Tnz1caRR-I)
 
