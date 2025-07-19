@@ -60,7 +60,7 @@ Así pues, destáquese que aquí se ha procedido con el uso de Python y ROS2 en 
   1. Un script de manejo de los servos en particular, para el posicionamiento y diseño de rutinas del manipulador.
   2. Un script que crea una interfaz de manejo virtual haciendo uso de la librería _Tkinter_, que vincula al anterior código.
   3. Un script que utiliza los tópicos y servicios de ROS, basándose en la estructura del Dynamixel Workbench, para controlar las articulaciones del manipulador.
-  4. Dos scripts de conexión: uno que permite la publicación y otro de suscripción en cada tópico de controlador por articulación.
+  4. Un script (que es una modificación del primero) que permiten la publicación y suscripción en cada tópico de controlador por articulación.
 
 Destaca que algunos de estos scripts se podrían integrar entre sí. De hecho, comparten muchas elementos y ocasionalmente estructuras. El motivo de esta segmentación es para mejor organización y distinción funcional, para llevar a cabo de manera secuencial los objetivos del laboratorio.
 
@@ -301,84 +301,111 @@ Este script destaca sobre los anteriores porque controla el manipulador utilizan
 
 Al igual que los anteriores, crea un nodo de ROS aquí llamado `PincherRosController` que se ejecuta en el espacio de trabajo ROS.
 
+Después de inicializar el nodo, se configuran las articulaciones, se crea el publicador y el cliente de servicio:
 
+```python
+ # Se añaden los nombres en base a las ID's
+        self.joint_names = ['waist', 'shoulder', 'elbow', 'wrist', 'gripper']
+        self.joint_ids = [1, 2, 3, 4, 5]
 
-```Python
-RDK = Robolink()
-robot = RDK.ItemUserPick("Selecciona un robot", ITEM_TYPE_ROBOT)
-if not robot.Valid():
-    raise Exception("No se ha seleccionado un robot válido.")
-if not robot.Connect():
-    raise Exception("No se pudo conectar al robot. Verifica que esté en modo remoto y que la configuración sea correcta.")
-if not robot.ConnectedState():
-    raise Exception("El robot no está conectado correctamente. Revisa la conexión.")
-print("Robot conectado correctamente.")
+        self.publisher_ = self.create_publisher(JointCommand, 'dynamixel_workbench/joint_command', 10)
+        self.get_logger().info('Publicador creado para el tópico dynamixel_workbench/joint_command')
+
+        # 2. Crear un cliente para llamar a un servicio (y el servicio SetPosition permite enviar un comando a un solo servo por ID).
+        self.set_pos_client = self.create_client(SetPosition, 'dynamixel_workbench/set_position')
+        while not self.set_pos_client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('Servicio /dynamixel_workbench/set_position no disponible, esperando...')
+        self.get_logger().info('Cliente de servicio creado para /dynamixel_workbench/set_position')
+```
+Con esto basta para definir métodos que permiten comunicación a través de tópicos y servicios. Se definen dos métodos en particular:
+
+```python
+    def send_joint_positions_by_topic(self, positions):
+
+        if len(positions) != len(self.joint_ids):
+            self.get_logger().error('El número de posiciones no coincide con el número de articulaciones.')
+            return
+
+        msg = JointCommand()
+        msg.joint_name = self.joint_names
+        msg.position = [float(p) for p in positions]  # Las posiciones deben ser floats
+        
+        self.publisher_.publish(msg)
+        self.get_logger().info('Publicando comando de posición en el tópico.')
+        self.get_logger().info(f'Posiciones enviadas: {positions}')
+
+    def set_single_joint_position_by_service(self, joint_id, position):
+
+        request = SetPosition.Request()
+        request.id = joint_id
+        request.position = position
+
+        future = self.set_pos_client.call_async(request)
+        self.get_logger().info(f'Llamando al servicio para mover el ID {joint_id} a la posición {position}')
+        
+        rclpy.spin_until_future_complete(self, future)
+        
+        if future.result() is not None and future.result().result:
+            self.get_logger().info(f'Servicio ejecutado con éxito para el ID {joint_id}.')
+        else:
+            self.get_logger().error(f'Fallo al llamar al servicio para el ID {joint_id}.')
 ```
 
-La primera línea crea un objeto de la clase Robolink, y la segunda permite seleccionar un robot en el caso de que se programe para más de uno. Las siguientes líneas son de verificación si la selección es válida y si la conexión está bien. _Estas son líneas que funcionarán si y solo sí se ejecuta con el controlador real, de forma que estas líneas de confirmación se deben comentar a la hora de ejecutar la simulación._
+El primero de estos métodos, el de tópicos, crea un _mensaje_ `JoinCommand` y llena el mensaje con los nombres y las posiciones de todas las articulaciones. Luego llama a `self.publisher_.publish(msg)` para enviar la instrucción de movimiento de manera asíncrona a todos los motores a la vez, lo cual es ideal para movimientos coordinados.
 
-```Python
-frame_name = "Frame_from_Target1"
-frame = RDK.Item(frame_name, ITEM_TYPE_FRAME)
-if not frame.Valid():
-    raise Exception(f'No se encontró el Frame "{frame_name}" en la estación.')
+El segundo, de servicios, crea una _solicitud_ (`request`) para el servicio `SetPosition`. Define la ID del servo y la posición deseada para la solicitud, y cuando está listo la envía al servicio, y `rclpy.spin_until_future_complete` hace que el cliente espere hasta recibir una respuesta del servidor.
 
-robot.setPoseFrame(frame)
-robot.setPoseTool(robot.PoseTool())
+Finalmente se tiene el `main`:
 
-robot.setSpeed(300)
-robot.setRounding(5)
+```python
+def main(args=None):
+    rclpy.init(args=args)
+    controller = PincherRosController()
+
+    # Poses de ejemplo
+    home_pose = [512, 512, 512, 512, 512]
+    pose_1 = [582, 582, 568, 454, 512]
+    
+    try:
+        # Ejemplo de movimiento usando el tópico (preferido para movimientos secuenciales/continuos)
+        controller.get_logger().info('Moviendo a la pose HOME usando el tópico.')
+        controller.send_joint_positions_by_topic(home_pose)
+        time.sleep(3)
+        controller.get_logger().info('Moviendo a la Pose 1 usando el tópico.')
+        controller.send_joint_positions_by_topic(pose_1)
+        time.sleep(3)
+
+        # Ejemplo de movimiento de un solo servo usando un servicio
+        controller.get_logger().info('Moviendo solo el servo del hombro (ID 2) a 600 usando el servicio.')
+        controller.set_single_joint_position_by_service(2, 600)
+        time.sleep(3)
+
+    except Exception as e:
+        controller.get_logger().error(f'Ocurrió un error: {e}')
+    finally:
+        controller.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
 ```
+Más allá de la inicialización de la biblioteca de ROS y la instancia del controlader, observe que define dos poses de ejemplo. Funciona de tal forma que muestra, por medio de estructuras _try_ moviendo el manipluador del `home` a esa `pose1`. Finalmente hay una pequeña estructura _catch_ en el caso de un error y al finalizar este procedimiento termina el script.
 
-Este siguiente bloque de instrucciones tiene como fin definir y cargar el frame, que es el workobject sobre el cual se van a realizar la trayectorias. Dado que el frame está inclinado y posicionado, es necesario cargarlo y dada la información cargada se ajustará. En particular, estas líneas asignan el frame al robot en particular que estemos empleando, luego se indica el usao de la herramienta activa y finalmente se dan dos líneas que son parámetros **únicos** de velocidad y blending para el robot (es decir, tendran efecto a lo largo de toda la operación hasta el final de su trabajo).
+---
 
-```Python
-num_points = 720      
-A = 30
-z_surface = 0
-z_safe = 50
-```
+### Cuarto Script: Suscripción y publicación por tópicos (`control_servo_MOD.py` y `pincher_gui_MOD.py`).
 
-Este siguiente bloque es de definición de parámetros que serán, básicamente, valores constantes a lo largo de la operación y útiles para realizarla. 
-  - El parámetro _num_points_ es el número de puntos o targets que tendrá en cuenta el robot: como tal, por medio de funciones lo que se hace es mover el robot de un target a otro, y por medio de código se puede hacer de forma que por medio de movimientos de tipo lineal o J se mueva a distancias cortas más o menos discretas pero tantas que cree una trayectoria suave.
-  - El parámetro _A_ es solo un factor de escala: en relación a la zona a dibujar hay una proporción dimensional que se está manejando de distancia física. Dado que, inicialmente, es muy pequeña, se multiplica este parámetro por cualquier movimiento para hacer que sea más grande la figura, los movimientos más largos, etc.
-  - El parámetro *z_surface* tiene como fin definir un nivel de altura con respecto al plano de dibujo, por si se quiere mantener un offset de _approach_ o dibujar sobre el aire. Debido a que se quiere dibujar sobre el plano, es igual a 0.
-  - Finalmente, *z_safe* es un parámetro de altura segura para aproximación y salida de la herramienta.
+En el caso de `pincher_gui_MOD.py` se introduce una nueva clase que hereda que hereda de `rclpy.node.Node` y utiliza un publicador para enviar comandos a un tópico de ROS llamado `'dynamixel_workbench/joint_command'`. Por otra parte, también usa `JointCommand` para enviar las posiciones de las articulaciones a través de un tópico de ROS, especificando los nombres de las articulaciones y las posiciones. Como extras:
+  - Se añade un hilo separado (`ros_thread`) para ejecutar `rclpy.spin()` sobre el nodo del controlador en `pincher_gui_MOD.py`, lo que permite que la interfaz gráfica (GUI) no se bloquee mientras el nodo ROS está activo. En el archivo original, el control del robot no se ejecuta en un hilo separado de `rclpy.spin()`.
+  -  La función `mover_a` en `pincher_gui_MOD.py` llama al método `pincher.send_joint_positions_by_topic()`, que publica en el tópico de ROS. La versión original llama a `pincher.cambioPos()`, que escribe directamente en el puerto del servo.
 
-```Python
-robot.MoveJ(transl(0, 0, z_surface + z_safe))
-robot.MoveL(transl(0, 0, z_surface))
-```
+Con lo anterior, se cumple el requisito de publicación al l crear un publicador que envía comandos de posición a un tópico de control de articulación de ROS.
 
-Aquí comienza el dibujado. La primera línea nos sitúa en el centro de la figura a realizar, y la segunda nos acerca a la superficie.
+---
 
-```Python
-full_turn = 2*math.pi
+## Parte No.3: Prueba Física.
 
-for i in range(num_points+1):
-    t = i / num_points
-    theta = full_turn * t
-
-    r = A*(2 - 2*math.sin(theta) + (math.sin(theta)*math.sqrt(math.fabs(math.cos(theta))))/(math.sin(theta)+1.4))
-
-    x = r * math.cos(theta)
-    y = r * math.sin(theta)
- 
-    robot.MoveL(transl(x, y, z_surface))
-```
-
-Este bloque ya describe el dibujado completo: 
-  - Se define una variable que va a indicar que, dado que es una trayectoria polar, va a girar, iniciando desde 0° hasta 360°.
-  - Ahora bien, se inserta un ciclo que define el punto a moverse con respecto a uno anterior para moverse linealmente hacia él.
-  - Dado que estamos manejando funciones polares, necesitamos un radio y un ángulo. Con ayuda del total del giro (que son 360°), se divide sobre el total de número de puntos de forma que se tenga el valor del ángulo para cada uno de todos los 720 puntos. Acto seguido, con al relación de variable dependiente (radio) a partir de la dependiente (ángulo) se obtiene la primera, y esta relación describe la figura, que es un corazón.
-  - Cada vez que se obtiene un radio, se usa en cojunto con el theta y se parametrizan a coordenadas cartesianas, puesto que la librería solo maneja coordenadas cartesianas. Se emplean, pues, fórmulas de libro.
-
-Una vez el ciclo termina, se sube la herramienta para evitar choques:
-
-```Python
-robot.MoveL(transl(x, y, z_surface + z_safe))
-```
-Y finaliza el módulo.
+Se muestra el siguiente plano de planta:
 
 En el siguiente video se muestran estos resultados: [Link al video de la presentación en youtube.](https://youtu.be/XjKmvOQerTY)
 
