@@ -1,4 +1,4 @@
-# Laboratorio No.4 (_Phantom X Pincher_)
+# Proyecto final (_Asador de arepas con el IRB-140_)
 
 <p align="center">
   <img src="images/pres.png" alt="Presentación" height="300">
