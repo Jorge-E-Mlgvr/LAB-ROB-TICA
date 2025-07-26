@@ -16,8 +16,17 @@ Se nos presenta la problema de diseñar, construir e instalar una herramienta pr
 
 Los objetivos específicos que se presentan en la guía del proyecto, de forma resumida, son los siguientes:
   1. Desde el manejo de una vitrina de almacenamiento de seis (6) posiciones, se deben retirar la solicitud del operario y colocarse en la plancha de cocción, con (4) posiciones, según orden de disponibilidad.
+  <p align="center">
+  <img src="images/vitrina.png" alt="Vitrina" height="300">
+</p>
   2. En función del tiempo de cocción, saber cuándo están listas las arepas y retirarse de la plancha para ser servidas.
+  <p align="center">
+  <img src="plancha/pres.png" alt="Plancha" height="300">
+</p>
   3. Desarrollar una HMI para el TeachPendant, para el cumplimiento completo de los anteriores objetivos mencionados.
+<p align="center">
+  <img src="images/hmi_ejemp.png" alt="HMI_EJEMPLO" height="300">
+</p>
 
 ---
 
