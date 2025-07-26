@@ -1,17 +1,23 @@
 # Laboratorio No.4 (_Phantom X Pincher_)
 
 <p align="center">
-  <img src="images/modelo.jpg" alt="Logo" height="300">
+  <img src="images/pres.png" alt="Presentación" height="300">
 </p>
 
-## Introducción del laboratorio
+**INTEGRANTES:** 
+1. Jaime Andrés Martín Moreno,
+2. Jorge Emilio Melo Guevara,
+3. Juan David Medina Pérez,
+4. Santiago Camilo Fonseca Prieto.
 
+## Introducción del proyecto
 
-Los objetivos del presente laboratorio son varios:
-  1. Hacer uso de ROS para manipular los servomotores del robot _Phantom X Pincher_, haciendo uso de la referencia en particular de estos servos (Dynamixel AX-12).
-  2. Aprender a manejar y manipular los estados y comandos para los controladores de articulaciones de este robot.
-  3. Comprender los servicios de operación del robot para sus articulaciones.
-  4. Haciendo uso del framework de ROS, usar Python para conectar con las articulaciones y manipularlas.
+Se nos presenta la problema de diseñar, construir e instalar una herramienta propia de tipo gripper que se pueda accionar (cierre y apertura) por medio de una señal digital conectada a una electroválvula. El objetivo general es integrarla con el manipulador IRB-140 y emplear el conjunto para implementar una rutina de recogimiento, puesta en asado y retirado del asador, para arepas.
+
+Los objetivos específicos que se presentan en la guía del proyecto, de forma resumida, son los siguientes:
+  1. Desde el manejo de una vitrina de almacenamiento de seis (6) posiciones, se deben retirar la solicitud del operario y colocarse en la plancha de cocción, con (4) posiciones, según orden de disponibilidad.
+  2. En función del tiempo de cocción, saber cuándo están listas las arepas y retirarse de la plancha para ser servidas.
+  3. Desarrollar una HMI para el TeachPendant, para el cumplimiento completo de los anteriores objetivos mencionados.
 
 ---
 
