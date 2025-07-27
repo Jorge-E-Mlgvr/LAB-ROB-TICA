@@ -33,7 +33,7 @@ Ahora bien, varios de estos objetivos presentan problemas para su desarrollo dad
 Esto no nos implidió continuar con el proyecto, y llevamos a cabo un trabajo que entregó resultados apropiados, ajustando los objetivos del proyecto de una manera distinta. Se presentan y luego se justifican:
   1. Desde una banda transportadora (que hace de estante), se debe retirar una arepa según la solicitud del operario y colocarse en una caja de cuatro posiciones, que hará las veces de plancha de cocción.
   2. Según la orden del operario, se debe retirar la arepa de la plancha, cuando esté lista, de forma que se recoloque de nuevo en la vitrina.
-  3. Desarrollar una HMI y verificar su fucionamiento para las órdenes dichas, en simulación.
+  3. Desarrollar una HMI y verificar su funcionamiento para las órdenes dichas, en simulación.
 
 Con los objetivos anteriores, somos capaces de de generalizar el procedimiento de tal forma que se pueda realizar con varias arepas y en diferentes posicines. Identificamos la necesitados de detección de casos y memoria para el almacenamiento de los estados del robot sobre las arepas actuales en cocción en la plancha, y consideramos que dado más tiempo y espacio, se podría lograr. Así pues, solo se trabajará con una arepa para mostrar los principios de la puesta, volteada y retirada de cada arepa.
 
@@ -291,7 +291,7 @@ Ya habiendo realizado estos pasos, se tiene el robot listo para realizar las ope
 
 ## Parte No.4: Resultados
 
-Se refiere aquí una vez más a los dos árboles de acciones que presentaba el módulo: uno para la prueba física, con botones, y otra con el _TeacPendant_ que no se podía realizar en físico. No por eso se mostrará solamente el funcionamiento del primer arbol, sino que se mostrará el del _TeachPendant_ por medio de una simulación en _RobotStudio_.
+Se refiere aquí una vez más a los dos árboles de acciones que presentaba el módulo: uno para la prueba física, con botones, y otra con el _TeachPendant_ que no se podía realizar en físico. No por eso se mostrará solamente el funcionamiento del primer arbol, sino que se mostrará el del _TeachPendant_ por medio de una simulación en _RobotStudio_.
 
 El HMI resultante fue el siguiente:
 
@@ -299,6 +299,6 @@ El HMI resultante fue el siguiente:
   <img src="images/HMI.jpg" alt="HMI" height="500">
 </p>
 
-En el siguiente video se muestran los resultados: [Link al video de a la demostración en youtube.](https://youtu.be/7Tnz1caRR-I)
+En el siguiente video se muestra la simulación y los resultados físicos: [Link al video de a la demostración en youtube.](https://youtu.be/7Tnz1caRR-I)
 
 
