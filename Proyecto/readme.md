@@ -116,7 +116,36 @@ Se ve, así, el conjunto ensamblado:
 
 ## Parte No.2: Rutina a realizar (RobotStudio).
 
-La rutina
+La rutina a realizar se encuentra en el módulo adjunto. Se describe a continuación su flujo general.
+
+En un principio. Es necesario tener en cuenta que el código se compone de dos partes:
+  1. El arbol de decisiones diseñado para ser operado con tres (3) botones de entrada digital.
+  2. El arbol de decisiones diseñado para ser operado con el TeachPendant, que cuenta con doce (12) entradas digitales.
+
+El motivo de esta fragmentación es la dificultad de cargar el HMI diseñado para el _TeachPendant_ al robot. Las entradas, pues, se asocian con esos botones de pantalla táctil. Debido a que este camino es el ideal, pero no es posible, para la muestra funcional se muestra la operación con botones, que se limita a tres entradas. Sin embargo, se explican a continuación ambos. 
+
+En un principio, ambos árboles están integrados en el mismo módulo y se pueden utilizar de forma independiente sin que el otro interfiera, de forma que en la muestra funcional se encuentra cargado pero inactivo el arbol relativo al _TeachPendant_. Dada esta distinción, también es posible realizar diagramas de flujo por separado para ambas rutinas. Se muestra, primero, el relativo al de los botones:
+
+```mermaid
+---
+config:
+  layout: fixed
+---
+flowchart TD
+    A(("Inicio")) --> B["Reseteo/Preseto de salidas digitales"] & C["Preparación: ir a home"]
+    B --> D["Bucle WHILE"]
+    C --> D
+    D --> E{"¿DI_01 = TRUE?"} & G{"¿DI_02 = TRUE?"} & I{"¿DI_03 = TRUE?"}
+    E -- SÍ --> F(("Toma1"))
+    F --> D
+    E -- NO --> D
+    G -- SÍ --> H(("Arepa1"))
+    H --> D
+    G -- NO --> D
+    I -- SÍ --> J(("Saca1"))
+    J --> D
+    I -- NO --> D
+```
 
 Así pues, destáquese que aquí se ha procedido con el uso de Python y ROS2 en tanto framework para manejar el manipulador, de la siguiente manera:
   1. Un script de manejo de los servos en particular, para el posicionamiento y diseño de rutinas del manipulador.
