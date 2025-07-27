@@ -15,18 +15,24 @@
 Se nos presenta la problema de diseñar, construir e instalar una herramienta propia de tipo gripper que se pueda accionar (cierre y apertura) por medio de una señal digital conectada a una electroválvula. El objetivo general es integrarla con el manipulador IRB-140 y emplear el conjunto para implementar una rutina de recogimiento, puesta en asado y retirado del asador, para arepas.
 
 Los objetivos específicos que se presentan en la guía del proyecto, de forma resumida, son los siguientes:
-  1. Desde el manejo de una vitrina de almacenamiento de seis (6) posiciones, se deben retirar la solicitud del operario y colocarse en la plancha de cocción, con (4) posiciones, según orden de disponibilidad.
+  1. Desde el manejo de una vitrina de almacenamiento de seis (6) posiciones, se deben retirar una arepa según la solicitud del operario y colocarse en la plancha de cocción, con (4) posiciones, según orden de disponibilidad.
   <p align="center">
   <img src="images/vitrina.png" alt="Vitrina" height="300">
 </p>
   2. En función del tiempo de cocción, saber cuándo están listas las arepas y retirarse de la plancha para ser servidas.
   <p align="center">
-  <img src="plancha/pres.png" alt="Plancha" height="300">
+  <img src="images/plancha.png" alt="Plancha" height="300">
 </p>
   3. Desarrollar una HMI para el TeachPendant, para el cumplimiento completo de los anteriores objetivos mencionados.
 <p align="center">
   <img src="images/hmi_ejemp.png" alt="HMI_EJEMPLO" height="300">
 </p>
+
+Ahora bien, varios de estos objetivos presentan problemas para su desarrollo dado el tiempo y disponibilidad de implementos, así como de espacios, para llevarlo a cabo completamente. Entre estas dificultades, destaca la de tiempo suficiente para llevarlo a cabo (se hizo realizó, al final, todo en torno a dos semanas) y de implementos: los estantes BAGGEBO mencionados para el proyecto no estuvieron disponibles, la carga del HMI fue difícil debido a la versión (algo antigua) de los robots, etc.
+
+Esto no nos implidió continuar con el proyecto, y llevamos a cabo un trabajo que entregó resultados apropiados, ajustando los objetivos del proyecto de una manera distinta. Se presentan y luego se justifican:
+  1. Desde una banda transportadora (que hace de estante), se debe retirar una arepa según la solicitud del operario y colocarse en una caja de cuatro posiciones, que hará las veces de plancha de cocción.
+  2. Según la orden del operario, 
 
 ---
 
