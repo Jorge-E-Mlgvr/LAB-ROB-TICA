@@ -283,8 +283,21 @@ _Cuarto_, se hizo una prueba de funcionamiento: Al energizar la electroválvula,
 
 Ya habiendo realizado estos pasos, se tiene el robot listo para realizar las operaciones:
 
+<p align="center">
+  <img src="images/prefinal.png" alt="Prefinal" height="400">
+</p>
 
+---
 
+## Parte No.4: Resultados
+
+Se refiere aquí una vez más a los dos árboles de acciones que presentaba el módulo: uno para la prueba física, con botones, y otra con el _TeacPendant_ que no se podía realizar en físico. No por eso se mostrará solamente el funcionamiento del primer arbol, sino que se mostrará el del _TeachPendant_ por medio de una simulación en _RobotStudio_.
+
+El HMI resultante fue el siguiente:
+
+<p align="center">
+  <img src="images/HMI.jpg" alt="HMI" height="500">
+</p>
 
 En el siguiente video se muestran los resultados: [Link al video de a la demostración en youtube.](https://youtu.be/7Tnz1caRR-I)
 
