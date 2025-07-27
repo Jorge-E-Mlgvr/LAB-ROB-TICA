@@ -67,11 +67,23 @@ En un inicio, se abordó a una empresa productora de arepas (cuyo logo se muestr
 | Yuca | Débil | $2\times 55$ (cascos) + $10$ (relleno) | $10.2 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
 | Dulces | Débil | $2\times 60$ (cascos) + $10$ (relleno) | $10.2 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
 
-Observe que no necesariamente coinciden con las medidas que se dieron en la tabla DH, puesto que este busca una simplificación cinemática que dadas las articulaciones y su relación espacial dé el mismo efecto del TCP que el manipulador real. Ahora bien, si se grafican con MATLAB únicamente la tabla de DH se puede ver el siguiente modelo:
+Después de hacer una revisión, para los pesos y la resistencia consideramos que el PLA propio de la impresora 3D sería suficinete para funcionar con una arepa real en las peores condiciones (mayor tamaño, peso, y consistencia débil). Se diseña la herramienta anticipando que pueda incluir la más, pudiendo recoger la más pequeña también. Se muestra a continuación una idea del gripper que la guía sugiría:
 
 <p align="center">
-  <img src="images/pincher_diagrama.jpg" alt="Motoman" height="600">
+  <img src="images/gripper_ejemplo.png" alt="Gripper_Ejemplo" height="500">
 </p>
+
+Como se puede observar, los laterales de las pinzas no parecen tener un agarre lo suficientemente seguro. Así pues, por lo menos nuestro diseño tendrá una base inferior para que el agarre por fricción no sea necesario. Los materiales también son muy débilaes para poder levantar y desplazar algo con la inercia de una arepa, de forma que se considera para nuestro diseño emplear toda la herramienta de PLA con capa gruesa. Finalmente, se piensa para nuestro diseño que esta herramienta sea capaz de realizar todas las acciones necesarias sobre la arepa (recogida, puesta, desplazamiento en el aire). Sumado a esto, se considera el hechod de que la acción de cierre y apertura se realizará con un actuador pinza neumática que se presta en el laboratorio, cuya foto se muestra a continuación:
+
+<p align="center">
+  <img src="images/pinza_neumatica.png" alt="Pinza_Neumática" height="500">
+</p>
+
+Este actuador debe ser adaptado en la base de la herramienta que diseñemos. Así, después de haberla limpiado, le tomamos medidas suficientes y fueron usadas para el diseño.
+
+El resultado del diseño fue el siguiente:
+
+
 
 ---
 
