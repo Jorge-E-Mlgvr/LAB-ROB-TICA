@@ -85,7 +85,7 @@ Que se debe conectar a la siguiente electroválvula 5-2:
   <img src="images/electrovalv.jpg" alt="Electrovalv" height="400">
 </p>
 
-Este actuador debe ser adaptado en la base de la herramienta que diseñemos. Así, después de haberla limpiado, le tomamos medidas suficientes y fueron usadas para el diseño.
+La pinza neumática debe ser adaptado en la base de la herramienta que diseñemos. Así, después de haberla limpiado, le tomamos medidas suficientes y fueron usadas para el diseño.
 
 El resultado, modelo por modelo, fue el siguiente: primero, se diseñó la base que se utilizaría parara atornillar al flange del IRB-140:
 
