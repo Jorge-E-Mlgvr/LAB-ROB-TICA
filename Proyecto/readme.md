@@ -241,7 +241,12 @@ Debido a la secuencialidad del código, y a su manera simpleza, se omite su pues
 
 ---
 
-## Parte No.3: Conexión del actuador
+## Parte No.3: Conexiones y arreglo de los elementos en el espacio de trabajo
+
+Ya esté cargado el módulo de RAPID al robot y estén situados los elementos, como la caja que hará la plancha con su arepa modelo y la banda transportadora a una cercanía apropiada, se ajusta la herramienta con la pinza neumática. Entonces, se vuelve necesario ubicar la electroválvula y conectarla con:
+  -Las entradas digitales.
+  -Las entradas de presión.
+  -La pinza neumática.
 
 Para conectar una **electroválvula 5/2** a una **pinza neumática de dos entradas**, sigue estos pasos:
 
