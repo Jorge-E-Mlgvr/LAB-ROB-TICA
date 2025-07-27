@@ -79,7 +79,7 @@ Como se puede observar, los laterales de las pinzas no parecen tener un agarre l
   <img src="images/pinza_neumatica.png" alt="Pinza_Neumática" height="400">
 </p>
 
-Que se debe conectar a la siguiente electroválvula 5-2:
+Que se debe conectar a la siguiente electroválvula 5/2:
 
 <p align="center">
   <img src="images/electrovalv.jpg" alt="Electrovalv" height="400">
@@ -242,6 +242,48 @@ Debido a la secuencialidad del código, y a su manera simpleza, se omite su pues
 ---
 
 ## Parte No.3: Conexión del actuador
+
+Para conectar una **electroválvula 5/2** a una **pinza neumática de dos entradas**, sigue estos pasos:
+
+### **Materiales necesarios:**
+- **Electroválvula 5/2** (5 vías, 2 posiciones).
+- **Pinza neumática** con dos entradas (una para abrir y otra para cerrar).
+- **Fuente de aire comprimido** (compresor o red neumática).
+- **Tubos neumáticos** (según el diámetro de las conexiones).
+- **Unidad de mantenimiento neumático** (filtro-regulador-lubricador, opcional pero recomendado).
+
+---
+
+### **Conexión paso a paso:**
+Primero, se tuvo la electroválvula 5/2 y se identificaro las conexiones de la siguiente forma:
+   - **P (Presión)**: Entrada de aire comprimido desde la fuente.
+   - **A y B**: Salidas hacia la pinza neumática (A para abrir, B para cerrar, o viceversa).
+   - **R y S**: Escape de aire (pueden combinarse o dejarse libres con silenciadores).
+   - **Señal eléctrica**: Conecta los cables de la electroválvula a tu control (12V, 24V, etc.).
+
+2. **Conecta la fuente de aire:**
+   - Une la **entrada P** de la electroválvula a la línea de aire comprimido (pasando por un filtro-regulador si es posible).
+
+3. **Conecta la pinza neumática:**
+   - Une el **puerto A** de la electroválvula a **una entrada** de la pinza.
+   - Une el **puerto B** de la electroválvula a la **otra entrada** de la pinza.
+
+4. **Prueba el funcionamiento:**
+   - Al energizar la electroválvula (activar la señal eléctrica), el aire fluirá de **P → A** y escapará por **B → S**, moviendo la pinza en una dirección.
+   - Al desenergizar (o cambiar la posición, dependiendo del tipo de válvula), el aire fluirá de **P → B** y escapará por **A → R**, moviendo la pinza en sentido contrario.
+
+---
+
+### **Diagrama simplificado:**
+---
+
+### **Notas importantes:**
+- **Dirección de la pinza**: Si la pinza no se mueve como esperas, intercambia las conexiones **A** y **B**.
+- **Escape de aire**: Los puertos **R** y **S** deben estar libres o con silenciadores para evitar contrapresión.
+- **Presión de aire**: Ajusta el regulador a la presión recomendada para la pinza (ej. 4–6 bar).
+
+Si necesitas un esquema más detallado o tienes dudas sobre el tipo específico de electroválvula (monoestable o biestable), ¡avísame!
+
 
 En el siguiente video se muestran los resultados: [Link al video de a la demostración en youtube.](https://youtu.be/7Tnz1caRR-I)
 
