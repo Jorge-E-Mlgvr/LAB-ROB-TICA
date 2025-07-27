@@ -96,7 +96,7 @@ Luego, se hizo un pequeño modelo de la pinza neumática con unos ejes para que 
 Finalmente, el diseño de las pinzas para la arepa, teniendo en cuenta todas las consideraciones mencionadas:
 
 <p align="center">
-  <img src="images/pinza_neumatica.png" alt="Pinza_Neumática" height="400">
+  <img src="images/tulas.png" alt="Pinza_Arepa" height="400">
 </p>
 
 Y un pequeño modelo de arepa del mayor tamaño posible para evidenciar en el modelo:
