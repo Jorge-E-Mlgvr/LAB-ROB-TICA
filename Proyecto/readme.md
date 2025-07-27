@@ -49,21 +49,23 @@ Se observa que igualmente realizamos el HMI y su funcionamiento se verifica por 
   <img src="images/abayta.png" alt="Logo_Abayta" height="500">
 </p>
 
-En un inicio, se abordó a una empresa productora de arepas (cuyo logo se muestra en la imagen) para una pequeña consulta sobre características generales sobre las arepas que hacían. Luego de la indagación, se obtuvieron los siguientes datos de sus arepas:
-
-| i | $\theta_i$ (rad) | $d_i$ (mm) | $a_i$ (mm) | $\alpha_i$ (rad) | **Offset** (rad) |
-|---|---|---|---|---|---|
-| **1** | $\theta_1$ | 42 | 0 | $\pi/2$ | $\pi/2$ |
-| **2** | $\theta_2$ | 0 | 104.5 | 0 | $\pi/2$ |
-| **3** | $\theta_3$ | 0 | 103 | 0 | 0 |
-| **4** | $\theta_4$ | 0 | 0 | $\pi/2$ | $\pi/2$ |
-| **5** | $\theta_5$ | 65 | 0 | 0 | $\pi/2$ |
-
-Sin embargo, obsérvese que estas medidas son solo las más cercanas entre articulaciones (es decir, las distancias normales a los ejes de las articulaciones). Son relevantes también las dimensiones físicas de algunos de sus componentes, pues determinarán muchas de las limitaciones espaciales o capacidades de movimiento del mismo, inclueyendo aplicaciones. Se obtuvieron las siguientes haciendo uso de un pie de rey:
+En un inicio, se abordó a una empresa productora de arepas (cuyo logo se muestra en la imagen) para una pequeña consulta sobre características generales sobre las arepas que hacían. Luego de la indagación, se obtuvieron los siguientes datos de sus arepas, haciendo uso de un pie de rey:
 
 | **Arepa** | **Consistencia** | **Peso (g)** | **Medidas (cm)** |
 |---|---|---|---|
-| Tradicionales | Fuerte y sólida | $2\times 60$ (cascos) + $15$ (relleno) | $10.2 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
+| Tradicionales | Fuerte y sólida | $2\times 60$ (cascos) + $15$ (bola relleno) | $10.2 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
+| Típicas | Fuerte y sólida | $2\times 60$ (cascos) + $15$ (relleno) | $10.2 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
+| Semi-Light | Fuerte y sólida | $130$ (masa bola, sin relleno) | $13.2 \pm 0.25$ (diámetro) + $0.8 \pm 0.2$ (grosor) |
+| Light | Fuerte y sólida | $125$ (masa bola, sin relleno) | $13.2 \pm 0.25$ (diámetro) + $0.8 \pm 0.2$ (grosor) |
+| Semipequñas | Fuerte y sólida | $60$ (masa bola, sin relleno) | $7.3 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
+| Tradicional mini | Fuerte y sólida | $2\times 30$ (cascos) + $5$ (bola relleno) | $7.3 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
+| De arroz | Débil | $100$ (masa bola, sin relleno) | $13.2 \pm 0.25$ (diámetro) + $0.5 \pm 0.2$ (grosor) |
+| De plátano | Débil | $2\times 55$ (cascos) + $10$ (relleno) | $13.2 \pm 0.25$ (diámetro) + $0.5 \pm 0.2$ (grosor) |
+| De quínoa | Débil | $125$ (masa bola, sin relleno) | $13.2 \pm 0.25$ (diámetro) + $0.8 \pm 0.2$ (grosor) |
+| De quínoa-q | Débil | $130$ (masa bola, sin relleno) | $13.2 \pm 0.25$ (diámetro) + $0.8 \pm 0.2$ (grosor) |
+| Integrales | Débil | $125$ (masa bola, sin relleno) | $13.2 \pm 0.25$ (diámetro) + $0.8 \pm 0.2$ (grosor) |
+| Yuca | Débil | $2\times 55$ (cascos) + $10$ (relleno) | $10.2 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
+| Dulces | Débil | $2\times 60$ (cascos) + $10$ (relleno) | $10.2 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
 
 Observe que no necesariamente coinciden con las medidas que se dieron en la tabla DH, puesto que este busca una simplificación cinemática que dadas las articulaciones y su relación espacial dé el mismo efecto del TCP que el manipulador real. Ahora bien, si se grafican con MATLAB únicamente la tabla de DH se puede ver el siguiente modelo:
 
