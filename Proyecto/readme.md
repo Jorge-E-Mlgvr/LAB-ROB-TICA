@@ -32,19 +32,24 @@ Ahora bien, varios de estos objetivos presentan problemas para su desarrollo dad
 
 Esto no nos implidió continuar con el proyecto, y llevamos a cabo un trabajo que entregó resultados apropiados, ajustando los objetivos del proyecto de una manera distinta. Se presentan y luego se justifican:
   1. Desde una banda transportadora (que hace de estante), se debe retirar una arepa según la solicitud del operario y colocarse en una caja de cuatro posiciones, que hará las veces de plancha de cocción.
-  2. Según la orden del operario, 
+  2. Según la orden del operario, se debe retirar la arepa de la plancha, cuando esté lista, de forma que se recoloque de nuevo en la vitrina.
+  3. Desarrollar una HMI y verificar su fucionamiento para las órdenes dichas, en simulación.
+
+Con los objetivos anteriores, somos capaces de de generalizar el procedimiento de tal forma que se pueda realizar con varias arepas y en diferentes posicines. Identificamos la necesitados de detección de casos y memoria para el almacenamiento de los estados del robot sobre las arepas actuales en cocción en la plancha, y consideramos que dado más tiempo y espacio, se podría lograr. Así pues, solo se trabajará con una arepa para mostrar los principios de la puesta, volteada y retirada de cada arepa.
+
+Se observa que igualmente realizamos el HMI y su funcionamiento se verifica por medio de simulación, comprobando lo anterior.
+
+
 
 ---
 
-## Parte No.1: Mediciones y Análisis del Phantom X Pincher.
-
-El robot _Phantom X Pincher_ es un robot pequeño con una gripper de prensa en su extremo. Cuenta con seis grados de libertad, todas son rotacionales; sin embargo, la sexta articulación funciona exclusivamente para el gripper, funguiendo con un mecanismo sencillo para transformar movimiento rotacional en lineal (cierre y apertura de la garra), de forma que no incide ni en la orientación del gripper ni en la posición del TCP, o siquiera cambia la configuración del robot. Así pues, se puede analizar su cinemática directa con cinco articulaciones únicamente:
+## Parte No.1: Proceso y consideraciones de diseño
 
 <p align="center">
-  <img src="images/Cinemática_directa_DH.png" alt="Motoman" height="500">
+  <img src="images/abayta.png" alt="Logo_Abayta" height="500">
 </p>
 
-Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
+En un inicio, se abordó a una empresa productora de arepas (cuyo logo se muestra en la imagen) para una pequeña consulta sobre características generales sobre las arepas que hacían. Luego de la indagación, se obtuvieron los siguientes datos de sus arepas:
 
 | i | $\theta_i$ (rad) | $d_i$ (mm) | $a_i$ (mm) | $\alpha_i$ (rad) | **Offset** (rad) |
 |---|---|---|---|---|---|
@@ -56,12 +61,9 @@ Del cual se obtiene la siguiente tabla de parámetros Denavit-Hartenberg.
 
 Sin embargo, obsérvese que estas medidas son solo las más cercanas entre articulaciones (es decir, las distancias normales a los ejes de las articulaciones). Son relevantes también las dimensiones físicas de algunos de sus componentes, pues determinarán muchas de las limitaciones espaciales o capacidades de movimiento del mismo, inclueyendo aplicaciones. Se obtuvieron las siguientes haciendo uso de un pie de rey:
 
-| **Eslabón (físico)** | **Medidas (mm)** |
-|---|---|
-| 1era a 2da (extremos) | 103.03 |
-| 2da a 3ra (extremos) | 103.35 |
-| 3era base a 3era extremo | 73.67 |
-| 3era extremo hasta el TCP | 108.74 |
+| **Arepa** | **Consistencia** | **Peso (g)** | **Medidas (cm)** |
+|---|---|---|---|
+| Tradicionales | Fuerte y sólida | $2\times 60$ (cascos) + $15$ (relleno) | $10.2 \pm 0.25$ (diámetro) + $1.5 \pm 0.2$ (grosor) |
 
 Observe que no necesariamente coinciden con las medidas que se dieron en la tabla DH, puesto que este busca una simplificación cinemática que dadas las articulaciones y su relación espacial dé el mismo efecto del TCP que el manipulador real. Ahora bien, si se grafican con MATLAB únicamente la tabla de DH se puede ver el siguiente modelo:
 
