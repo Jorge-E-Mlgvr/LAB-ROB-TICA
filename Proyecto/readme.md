@@ -233,7 +233,9 @@ Debido a la secuencialidad del código, y a su manera simpleza, se omite su pues
   - $10\>mm$ de zona de error o aproximación.
   - Coordenadas (_targets_) y trayectorias relativas al _WorkObject_ definido
 
+---
 
+## Parte No.3: Conexión del actuador
 
 En el siguiente video se muestran los resultados: [Link al video de a la demostración en youtube.](https://youtu.be/7Tnz1caRR-I)
 
