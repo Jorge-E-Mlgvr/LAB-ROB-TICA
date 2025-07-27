@@ -243,51 +243,47 @@ Debido a la secuencialidad del código, y a su manera simpleza, se omite su pues
 
 ## Parte No.3: Conexiones y arreglo de los elementos en el espacio de trabajo
 
+<p align="center">
+  <img src="images/setup.png" alt="Modelo_Completo" height="500">
+</p>
+
 Ya esté cargado el módulo de RAPID al robot y estén situados los elementos, como la caja que hará la plancha con su arepa modelo y la banda transportadora a una cercanía apropiada, se ajusta la herramienta con la pinza neumática. Entonces, se vuelve necesario ubicar la electroválvula y conectarla con:
   -Las entradas digitales.
-  -Las entradas de presión.
-  -La pinza neumática.
+  -Las entradas de presión (desde una red neumática, con mangueras se obtuvo el aire comprimido de $6mm$ y $8mm$ con reductores).
+  -La pinza neumática (con dos entradas, una para abrir y otra para cerrar).
 
-Para conectar una **electroválvula 5/2** a una **pinza neumática de dos entradas**, sigue estos pasos:
+<p align="center">
+  <img src="images/elev_compar.png" alt="Diagram_Electrovalv" height="400">
+</p>
 
-### **Materiales necesarios:**
-- **Electroválvula 5/2** (5 vías, 2 posiciones).
-- **Pinza neumática** con dos entradas (una para abrir y otra para cerrar).
-- **Fuente de aire comprimido** (compresor o red neumática).
-- **Tubos neumáticos** (según el diámetro de las conexiones).
-- **Unidad de mantenimiento neumático** (filtro-regulador-lubricador, opcional pero recomendado).
+Obsérvese el diagrama de la electroválvula. Para conectar esta electroválvula 5/2 (5 vías, 2 posiciones) se siguieron estos pasos:
 
----
+_Primero_, se tuvo la electroválvula 5/2 y se identificaron las conexiones de la siguiente forma:
+   - **No.1 (Presión)**: Entrada de aire comprimido desde la fuente [P].
+   - **No.2 y No.4**: Salidas de presión, hacia la pinza neumática (No.2 para abrir, No.4 para cerrar) [A y B].
+   - **No.3 y No.5**: Conexiones de escape de aire (que se dejaron libres sin silenciadores) [R y S].
+   - **Señal eléctrica**: Conecta los cables de la electroválvula a tu control (24V).
+   - **No.12 y No.14**: Entradas eléctricas, digitales.
+Se explica brevemente el funcionamiento de este actuador:
+  - Las líneas con una pequeña "T" al final indican que son escapes silenciados o sin conexión para recuperación.
+  - Cada cuadro representa una posición de la válvula. El diagrama muestra dos cuadros, indicando dos posiciones.
+  - El motivo de los números "14" y "12" es dados los símbolos por tipo de solenoide: el "14" es el símbolo de un solenoide con retorno por muelle (o fuerza pilotada por muelle) y cuando se energiza el solenoide conectado a la vía 14, la válvula cambia a la posición derecha; por otra parte, el "12" va haca la posición izquierda.
+  - Para la posición del cuadro de la izquierda:
+      - El aire entra por 1 y fluye hacia 2.
+      - La vía 4 está conectada al escape 5.
+      - La vía 3 está bloqueada o es un escape de la vía 2 (aunque aquí se muestra como escape de la 2).
+  - Para la posición del cuadro de la derecha:
+      - El aire entra por 1 y fluye hacia 4.
+      - La vía 2 está conectada al escape 3.
+      - La vía 5 está bloqueada o es un escape de la vía 4.
 
-### **Conexión paso a paso:**
-Primero, se tuvo la electroválvula 5/2 y se identificaro las conexiones de la siguiente forma:
-   - **P (Presión)**: Entrada de aire comprimido desde la fuente.
-   - **A y B**: Salidas hacia la pinza neumática (A para abrir, B para cerrar, o viceversa).
-   - **R y S**: Escape de aire (pueden combinarse o dejarse libres con silenciadores).
-   - **Señal eléctrica**: Conecta los cables de la electroválvula a tu control (12V, 24V, etc.).
+_Segundo_, se conectó la fuente de aire a la entrada de presión de la electroválvula a la línea de aire comprimido. 
+_Tercero_, se conectó la pinza neumática, tal que el puerto se unió el puerto A de la electroválvula a una entrada de la pinza, y el puerto B a la otra entrada de la pinza. 
+_Cuarto_, se hizo una prueba de funcionamiento: Al energizar la electroválvula, el aire debería fluir de **P → A** y escapará por **B → S**, moviendo la pinza en una dirección y al desenergizar (o cambiar la posición, dependiendo del tipo de válvula), el aire fluirá de **P → B** y escapará por **A → R**, moviendo la pinza en sentido contrario. Si ocurría lo contrario, se invertían las conexiones en las entadas de la pinza.
 
-2. **Conecta la fuente de aire:**
-   - Une la **entrada P** de la electroválvula a la línea de aire comprimido (pasando por un filtro-regulador si es posible).
+Ya habiendo realizado estos pasos, se tiene el robot listo para realizar las operaciones:
 
-3. **Conecta la pinza neumática:**
-   - Une el **puerto A** de la electroválvula a **una entrada** de la pinza.
-   - Une el **puerto B** de la electroválvula a la **otra entrada** de la pinza.
 
-4. **Prueba el funcionamiento:**
-   - Al energizar la electroválvula (activar la señal eléctrica), el aire fluirá de **P → A** y escapará por **B → S**, moviendo la pinza en una dirección.
-   - Al desenergizar (o cambiar la posición, dependiendo del tipo de válvula), el aire fluirá de **P → B** y escapará por **A → R**, moviendo la pinza en sentido contrario.
-
----
-
-### **Diagrama simplificado:**
----
-
-### **Notas importantes:**
-- **Dirección de la pinza**: Si la pinza no se mueve como esperas, intercambia las conexiones **A** y **B**.
-- **Escape de aire**: Los puertos **R** y **S** deben estar libres o con silenciadores para evitar contrapresión.
-- **Presión de aire**: Ajusta el regulador a la presión recomendada para la pinza (ej. 4–6 bar).
-
-Si necesitas un esquema más detallado o tienes dudas sobre el tipo específico de electroválvula (monoestable o biestable), ¡avísame!
 
 
 En el siguiente video se muestran los resultados: [Link al video de a la demostración en youtube.](https://youtu.be/7Tnz1caRR-I)
