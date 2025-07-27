@@ -79,6 +79,12 @@ Como se puede observar, los laterales de las pinzas no parecen tener un agarre l
   <img src="images/pinza_neumatica.png" alt="Pinza_Neumática" height="400">
 </p>
 
+Que se debe conectar a la siguiente electroválvula 5-2:
+
+<p align="center">
+  <img src="images/electrovalv.jpg" alt="Electrovalv" height="400">
+</p>
+
 Este actuador debe ser adaptado en la base de la herramienta que diseñemos. Así, después de haberla limpiado, le tomamos medidas suficientes y fueron usadas para el diseño.
 
 El resultado, modelo por modelo, fue el siguiente: primero, se diseñó la base que se utilizaría parara atornillar al flange del IRB-140:
