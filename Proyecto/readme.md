@@ -70,19 +70,46 @@ En un inicio, se abordó a una empresa productora de arepas (cuyo logo se muestr
 Después de hacer una revisión, para los pesos y la resistencia consideramos que el PLA propio de la impresora 3D sería suficinete para funcionar con una arepa real en las peores condiciones (mayor tamaño, peso, y consistencia débil). Se diseña la herramienta anticipando que pueda incluir la más, pudiendo recoger la más pequeña también. Se muestra a continuación una idea del gripper que la guía sugiría:
 
 <p align="center">
-  <img src="images/gripper_ejemplo.png" alt="Gripper_Ejemplo" height="500">
+  <img src="images/gripper_ejemplo.png" alt="Gripper_Ejemplo" height="400">
 </p>
 
 Como se puede observar, los laterales de las pinzas no parecen tener un agarre lo suficientemente seguro. Así pues, por lo menos nuestro diseño tendrá una base inferior para que el agarre por fricción no sea necesario. Los materiales también son muy débilaes para poder levantar y desplazar algo con la inercia de una arepa, de forma que se considera para nuestro diseño emplear toda la herramienta de PLA con capa gruesa. Finalmente, se piensa para nuestro diseño que esta herramienta sea capaz de realizar todas las acciones necesarias sobre la arepa (recogida, puesta, desplazamiento en el aire). Sumado a esto, se considera el hechod de que la acción de cierre y apertura se realizará con un actuador pinza neumática que se presta en el laboratorio, cuya foto se muestra a continuación:
 
 <p align="center">
-  <img src="images/pinza_neumatica.png" alt="Pinza_Neumática" height="500">
+  <img src="images/pinza_neumatica.png" alt="Pinza_Neumática" height="400">
 </p>
 
 Este actuador debe ser adaptado en la base de la herramienta que diseñemos. Así, después de haberla limpiado, le tomamos medidas suficientes y fueron usadas para el diseño.
 
-El resultado del diseño fue el siguiente:
+El resultado, modelo por modelo, fue el siguiente: primero, se diseñó la base que se utilizaría parara atornillar al flange del IRB-140:
 
+<p align="center">
+  <img src="images/base.png" alt="Base" height="400">
+</p>
+
+Luego, se hizo un pequeño modelo de la pinza neumática con unos ejes para que se pudieran ensamblar con las pinzas de arepas, principales:
+
+<p align="center">
+  <img src="images/mod_neum.png" alt="Modelo_Neumático" height="400">
+</p>
+
+Finalmente, el diseño de las pinzas para la arepa, teniendo en cuenta todas las consideraciones mencionadas:
+
+<p align="center">
+  <img src="images/pinza_neumatica.png" alt="Pinza_Neumática" height="400">
+</p>
+
+Y un pequeño modelo de arepa del mayor tamaño posible para evidenciar en el modelo:
+
+<p align="center">
+  <img src="images/mod_arepa.png" alt="Mod_Arepa" height="400">
+</p>
+
+Se ve, así, el conjunto ensamblado:
+
+<p align="center">
+  <img src="images/whole.png" alt="Modelo_Completo" height="400">
+</p>
 
 
 ---
