@@ -299,6 +299,6 @@ El HMI resultante fue el siguiente:
   <img src="images/HMI.jpg" alt="HMI" height="500">
 </p>
 
-En el siguiente video se muestra la simulación y los resultados físicos: [Link al video de a la demostración en youtube.](https://youtu.be/7Tnz1caRR-I)
+En el siguiente video se muestra la simulación y los resultados físicos: [Link al video de a la demostración en youtube.](https://youtu.be/96cTgR2HVno)
 
 
